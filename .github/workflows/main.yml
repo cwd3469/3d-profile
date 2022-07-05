@@ -1,4 +1,4 @@
-name: 3D-profile
+name: 3d-profile
  
 on:
   push:
@@ -7,7 +7,7 @@ on:
  
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout source code
         uses: actions/checkout@master
@@ -26,7 +26,8 @@ jobs:
  
       - name: Build
         run: npm run build
-        
+        env:
+          CI:
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -35,4 +36,4 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://3d-profile
+            dist s3://3d-profile
