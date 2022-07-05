@@ -28,6 +28,9 @@ jobs:
         run: npm run build
         env:
           CI: ''
+      - name : Clear 
+        run: npm cache clean --force
+        
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
