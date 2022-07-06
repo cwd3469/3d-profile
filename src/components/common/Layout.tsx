@@ -14,7 +14,7 @@ const Layout = (props: Layout_t) => {
               <GridItem colSpan={1} rowSpan={1}>
                 <Menu />
               </GridItem>
-              <GridItem colSpan={9} rowSpan={1} bg="papayawhip">
+              <GridItem colSpan={9} rowSpan={1}>
                 {props.children}
               </GridItem>
             </Grid>
