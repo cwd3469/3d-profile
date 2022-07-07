@@ -3,6 +3,10 @@ const path = require("path");
 
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    loader: "imgix",
+    path: "https//3d-profile.com/myaccount",
+  },
   webpack(config, { webpack }) {
     config.resolve = {
       alias: {
