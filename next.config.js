@@ -5,7 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     loader: "imgix",
-    path: "https//3d-profile.com/myaccount",
+    path: "https://example.com/myaccount/",
   },
   webpack(config, { webpack }) {
     config.resolve = {
