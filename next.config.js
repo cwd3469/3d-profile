@@ -7,6 +7,11 @@ const nextConfig = {
     loader: "imgix",
     path: "https://example.com/myaccount/",
   },
+  exportPathMap: async function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+    return {
+      "/": { page: "/" },
+    };
+  },
   webpack(config, { webpack }) {
     config.resolve = {
       alias: {
