@@ -1,7 +1,8 @@
-import { Avatar, Box, CSSObject, Grid, GridItem, Flex, Text, Heading, Checkbox, IconButton, Input } from "@chakra-ui/react";
+import { Avatar, Box, CSSObject, Grid, GridItem, Flex, Text, Heading, Checkbox, Switch, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
 import { Mybodyinfo, todoData } from "@components/home/type";
+import { AddIcon } from "@chakra-ui/icons";
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
     textAlign: "center",
@@ -116,14 +117,32 @@ const HomeCenter = () => {
               26 Aug 2022
             </Heading>
           </Flex>
-          <Box bg="#FFFFFF" borderRadius="30px" padding="20px 10px" sx={shadow} h="370px" overflow="scroll" marginBottom="10px">
+          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflow="scroll" marginBottom="20px">
             <Flex w="100%" gap="7px" flexDirection="column">
               {todoData.map((item, index) => {
                 return <TodoItem key={index} todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />;
               })}
             </Flex>
           </Box>
-          <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" />
+          <Box bg="#FFFFFF" borderRadius="30px" padding="15px 20px" sx={shadow} marginBottom="20px">
+            <Flex flexDirection="column" gap="10px">
+              <FormControl display="flex" alignItems="center" justifyContent="space-between">
+                <FormLabel htmlFor="email-alerts" mb="0">
+                  공개 / 비공개
+                </FormLabel>
+                <Switch id="email-alerts" colorScheme="green" />
+              </FormControl>
+              <Flex alignItems="stretch" gap="5px">
+                <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" h="auth" />
+                <Button padding="10px 20px" h="auto" bg="#CEEBEE" color="#5CBEC7">
+                  <Flex flexDirection="column" alignItems="center" gap="5px">
+                    <AddIcon />
+                    <Text fontSize="10px">add</Text>
+                  </Flex>
+                </Button>
+              </Flex>
+            </Flex>
+          </Box>
         </Box>
       </Flex>
     </Box>
@@ -137,7 +156,7 @@ const TodoItem = (props: todoData) => {
         <Heading fontSize="sm">{props.todoTitle}</Heading>
         <Flex gap="6px">
           <EditIcon fontSize="small" sx={{ cursor: "pointer" }} />
-          <Checkbox checked={props.todoCheck} />
+          <Checkbox checked={props.todoCheck} colorScheme="green" />
         </Flex>
       </Flex>
     </Box>

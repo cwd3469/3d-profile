@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <GridItem colSpan={3} rowSpan={1}>
           <HomeCenter />
         </GridItem>
-        <GridItem colSpan={7} rowSpan={1} bg="blue"></GridItem>
+        <GridItem colSpan={7} rowSpan={1} bg="#fff"></GridItem>
       </Grid>
     </Layout>
   );
