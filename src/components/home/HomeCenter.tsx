@@ -1,7 +1,7 @@
 import { Avatar, Box, CSSObject, Grid, GridItem, Flex, Text, Heading, Checkbox, Switch, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
-import { Mybodyinfo, todoData } from "@components/home/type";
+import { Mybodyinfo, TodoData } from "@components/home/type";
 import { AddIcon } from "@chakra-ui/icons";
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
@@ -21,7 +21,7 @@ const HomeCenter = () => {
     autherId: random(30),
   };
 
-  const todoData: Array<todoData> = [
+  const TodoData: Array<TodoData> = [
     {
       todoId: random(30),
       autherId: random(30),
@@ -117,9 +117,9 @@ const HomeCenter = () => {
               26 Aug 2022
             </Heading>
           </Flex>
-          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflow="scroll" marginBottom="20px">
+          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflowY="scroll" marginBottom="20px">
             <Flex w="100%" gap="7px" flexDirection="column">
-              {todoData.map((item, index) => {
+              {TodoData.map((item, index) => {
                 return <TodoItem key={index} todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />;
               })}
             </Flex>
@@ -149,7 +149,7 @@ const HomeCenter = () => {
   );
 };
 
-const TodoItem = (props: todoData) => {
+const TodoItem = (props: TodoData) => {
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
       <Flex justifyContent="space-between">

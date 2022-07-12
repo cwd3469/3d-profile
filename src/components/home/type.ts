@@ -8,9 +8,11 @@ export interface Mybodyinfo {
     autherId:string,
 }
 
-export interface todoData {
+export interface TodoData {
     todoId: string,
       autherId: string,
       todoTitle: string, 
       todoCheck: boolean,
+      todoDate?:string,
+      endDate?:string
 }
