@@ -82,22 +82,24 @@ const HomeGraph = () => {
 const MarathonItem = (props: TodoData) => {
   const DoxTitle: CSSObject = {
     whiteSpace: "nowrap",
-    width: "50px",
     overflow: "hidden",
     textOverflow: "ellipsis",
   };
   return (
-    <Box padding="10px" borderLeft="10px solid red" w="200px" flex="0 0 auth">
-      <Flex flexDirection="column">
-        <Heading color="#C1C3C9" fontSize="10px" paddingBottom="10px" letterSpacing="-1px">
-          {props.endDate}
-        </Heading>
-        <Heading color="#000" fontSize="sm" sx={DoxTitle}>
-          {props.todoTitle}
-        </Heading>
-        <Heading color="#C1C3C9" fontSize="13px">
-          {props.todoDate}
-        </Heading>
+    <Box padding="10px" bg="#fff">
+      <Flex alignItems="stretch" gap="10px" w="200px">
+        <Box w="5px" backgroundColor="salmon" borderRadius="30px" />
+        <Flex w="185px" flexDirection="column">
+          <Heading color="#C1C3C9" fontSize="10px" paddingBottom="10px" letterSpacing="-1px">
+            {props.endDate}
+          </Heading>
+          <Heading color="#000" fontSize="sm" sx={DoxTitle}>
+            {props.todoTitle}
+          </Heading>
+          <Heading color="#C1C3C9" fontSize="13px">
+            {props.todoDate}
+          </Heading>
+        </Flex>
       </Flex>
     </Box>
   );
