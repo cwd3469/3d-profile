@@ -1,4 +1,21 @@
-import { Avatar, Box, CSSObject, Grid, GridItem, Flex, Text, Heading, Checkbox, Switch, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  CSSObject,
+  Grid,
+  GridItem,
+  Flex,
+  Text,
+  Heading,
+  Checkbox,
+  Switch,
+  Input,
+  Button,
+  FormControl,
+  FormLabel,
+  ComponentWithAs,
+  IconProps,
+} from "@chakra-ui/react";
 import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
 import { Mybodyinfo, TodoData } from "@components/home/type";
@@ -134,12 +151,7 @@ const HomeCenter = () => {
               </FormControl>
               <Flex alignItems="stretch" gap="5px">
                 <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" h="auth" />
-                <Button padding="10px 20px" h="auto" bg="#CEEBEE" color="#5CBEC7">
-                  <Flex flexDirection="column" alignItems="center" gap="5px">
-                    <AddIcon />
-                    <Text fontSize="10px">add</Text>
-                  </Flex>
-                </Button>
+                <TodoAdd text="add" Icon={<AddIcon />} />
               </Flex>
             </Flex>
           </Box>
@@ -160,6 +172,24 @@ const TodoItem = (props: TodoData) => {
         </Flex>
       </Flex>
     </Box>
+  );
+};
+
+interface TodoAdd {
+  onClick?: () => void;
+  text?: string;
+  Icon?: JSX.Element;
+  padding?: string;
+  fontSize?: string;
+}
+export const TodoAdd = (props: TodoAdd) => {
+  return (
+    <Button padding={props.padding ? props.padding : "10px 20px"} h="auto" bg="#CEEBEE" color="#5CBEC7" onClick={props.onClick}>
+      <Flex flexDirection="column" alignItems="center" gap="5px" justifyContent="center">
+        <>{props.Icon}</>
+        <Text fontSize={props.fontSize ? props.fontSize : "10px"}>{props.text}</Text>
+      </Flex>
+    </Button>
   );
 };
 
