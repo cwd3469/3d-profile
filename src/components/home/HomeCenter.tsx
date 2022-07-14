@@ -1,7 +1,24 @@
-import { Avatar, Box, CSSObject, Grid, GridItem, Flex, Text, Heading, Checkbox, Switch, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  CSSObject,
+  Grid,
+  GridItem,
+  Flex,
+  Text,
+  Heading,
+  Checkbox,
+  Switch,
+  Input,
+  Button,
+  FormControl,
+  FormLabel,
+  ComponentWithAs,
+  IconProps,
+} from "@chakra-ui/react";
 import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
-import { Mybodyinfo, todoData } from "@components/home/type";
+import { Mybodyinfo, TodoData } from "@components/home/type";
 import { AddIcon } from "@chakra-ui/icons";
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
@@ -21,7 +38,7 @@ const HomeCenter = () => {
     autherId: random(30),
   };
 
-  const todoData: Array<todoData> = [
+  const TodoData: Array<TodoData> = [
     {
       todoId: random(30),
       autherId: random(30),
@@ -117,9 +134,9 @@ const HomeCenter = () => {
               26 Aug 2022
             </Heading>
           </Flex>
-          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflow="scroll" marginBottom="20px">
+          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflowY="scroll" marginBottom="20px">
             <Flex w="100%" gap="7px" flexDirection="column">
-              {todoData.map((item, index) => {
+              {TodoData.map((item, index) => {
                 return <TodoItem key={index} todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />;
               })}
             </Flex>
@@ -134,12 +151,7 @@ const HomeCenter = () => {
               </FormControl>
               <Flex alignItems="stretch" gap="5px">
                 <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" h="auth" />
-                <Button padding="10px 20px" h="auto" bg="#CEEBEE" color="#5CBEC7">
-                  <Flex flexDirection="column" alignItems="center" gap="5px">
-                    <AddIcon />
-                    <Text fontSize="10px">add</Text>
-                  </Flex>
-                </Button>
+                <TodoAdd text="add" Icon={<AddIcon />} />
               </Flex>
             </Flex>
           </Box>
@@ -149,7 +161,7 @@ const HomeCenter = () => {
   );
 };
 
-const TodoItem = (props: todoData) => {
+const TodoItem = (props: TodoData) => {
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
       <Flex justifyContent="space-between">
@@ -160,6 +172,24 @@ const TodoItem = (props: todoData) => {
         </Flex>
       </Flex>
     </Box>
+  );
+};
+
+interface TodoAdd {
+  onClick?: () => void;
+  text?: string;
+  Icon?: JSX.Element;
+  padding?: string;
+  fontSize?: string;
+}
+export const TodoAdd = (props: TodoAdd) => {
+  return (
+    <Button padding={props.padding ? props.padding : "10px 20px"} h="auto" bg="#CEEBEE" color="#5CBEC7" onClick={props.onClick}>
+      <Flex flexDirection="column" alignItems="center" gap="5px" justifyContent="center">
+        <>{props.Icon}</>
+        <Text fontSize={props.fontSize ? props.fontSize : "10px"}>{props.text}</Text>
+      </Flex>
+    </Button>
   );
 };
 

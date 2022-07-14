@@ -2,15 +2,18 @@ import type { NextPage } from "next";
 import Layout from "@components/common/Layout";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import HomeCenter from "@components/home/HomeCenter";
+import HomeGraph from "@components/home/HomeGraph";
 
 const Home: NextPage = () => {
   return (
     <Layout>
-      <Grid templateColumns="repeat(10, 2fr)" w="1024px" h="768px">
-        <GridItem colSpan={3} rowSpan={1}>
+      <Grid templateColumns="repeat(14, 1fr)">
+        <GridItem colSpan={5} rowSpan={1}>
           <HomeCenter />
         </GridItem>
-        <GridItem colSpan={7} rowSpan={1} bg="#fff"></GridItem>
+        <GridItem colSpan={9} rowSpan={1}>
+          <HomeGraph />
+        </GridItem>
       </Grid>
     </Layout>
   );
