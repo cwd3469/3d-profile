@@ -20,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
 import { Mybodyinfo, TodoData } from "@components/home/type";
 import { AddIcon } from "@chakra-ui/icons";
+import { MouseEventHandler } from "react";
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
     textAlign: "center",
@@ -176,7 +177,7 @@ const TodoItem = (props: TodoData) => {
 };
 
 interface TodoAdd {
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   text?: string;
   Icon?: JSX.Element;
   padding?: string;
