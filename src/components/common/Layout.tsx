@@ -1,5 +1,6 @@
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import Menu from "@components/common/Menu";
+import { CSSObject } from "@emotion/react";
 interface Layout_t {
   children: JSX.Element;
 }
@@ -23,6 +24,17 @@ const Layout = (props: Layout_t) => {
       </Flex>
     </Box>
   );
+};
+
+export const SideBody = (props: { children: JSX.Element }) => {
+  const sideBodyStyle: CSSObject = {
+    bg: "#fff",
+    h: "100%",
+    w: "100%",
+    borderRadius: "60px 0 0 60px",
+    padding: "30px",
+  };
+  return <Box sx={sideBodyStyle}>{props.children}</Box>;
 };
 
 export default Layout;

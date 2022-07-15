@@ -1,10 +1,15 @@
 import React, { MouseEventHandler } from "react";
-import { Box, Text, GridItem, Heading, Flex, CSSObject, background, Image } from "@chakra-ui/react";
+import { Box, Text, GridItem, Heading, Flex, CSSObject, background, Image, Button } from "@chakra-ui/react";
 import random from "@utils/random";
 import { TodoData } from "@components/home/type";
 import { TodoAdd } from "./HomeCenter";
 import { AddIcon, StarIcon } from "@chakra-ui/icons";
 import { ChartList } from "@components/common/Chart";
+import { SideBody } from "@components/common/Layout";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Mousewheel, Scrollbar } from "swiper";
 
 interface StartItem {
   url: string;
@@ -84,26 +89,25 @@ const HomeGraph = () => {
     setChartFilter(txt);
   };
   return (
-    <Box bg="#fff" h="100%" w="100%" borderRadius="60px 0 0 60px" padding="30px">
+    <SideBody>
       <Flex flexDirection="column" w="100%" h="100%" gap="10px">
         <Box>
           <Flex flexDirection="column" gap="10px" paddingTop="10px">
             <Flex justifyContent="space-between" alignItems="center">
               <FinalTitle text=" Final goal" />
               <Flex alignItems="center" gap="10px">
-                <TodoAdd Icon={<StarIcon lineHeight="1" />} padding="5px" />
+                <GraphBtn Icon={<StarIcon />} />
                 <Heading fontSize="sm" color="#5CBEC7">
                   See All
                 </Heading>
               </Flex>
             </Flex>
 
-            <Flex flex="1" overflowX="scroll" overflowY="hidden">
-              <Flex flexWrap="nowrap" gap="5px" padding="10px">
-                {data.map((x, index) => {
-                  return (
+            <Swiper slidesPerView={2.5} spaceBetween={10} mousewheel={true} modules={[Mousewheel, Scrollbar]} className="final-swiper">
+              {data.map((x, index) => {
+                return (
+                  <SwiperSlide key={index}>
                     <FinalItem
-                      key={index}
                       todoId={x.todoId}
                       autherId={x.autherId}
                       todoTitle={x.todoTitle}
@@ -111,10 +115,10 @@ const HomeGraph = () => {
                       todoDate={x.todoDate}
                       endDate={x.endDate}
                     />
-                  );
-                })}
-              </Flex>
-            </Flex>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
           </Flex>
         </Box>
         <Box>
@@ -123,7 +127,7 @@ const HomeGraph = () => {
               <FinalTitle text="Todo Chart" />
               <Flex alignItems="center" gap="10px">
                 {arr.map((item, index) => {
-                  return <TodoAdd key={index} text={item} padding="9px 5px" fontSize="20px" onClick={() => selectClick(item)} />;
+                  return <GraphBtn key={index} text={item} onClick={() => selectClick(item)} />;
                 })}
               </Flex>
             </Flex>
@@ -135,7 +139,7 @@ const HomeGraph = () => {
             <Flex justifyContent="space-between" alignItems="center">
               <FinalTitle text="Go Run!" />
               <Flex alignItems="center" gap="10px">
-                <TodoAdd Icon={<StarIcon lineHeight="1" />} padding="5px" />
+                <GraphBtn Icon={<StarIcon lineHeight="1" />} />
                 <Heading fontSize="sm" color="#5CBEC7">
                   See All
                 </Heading>
@@ -143,19 +147,19 @@ const HomeGraph = () => {
             </Flex>
             <Flex alignItems="center" gap="10px">
               {myPage.map((item, index) => {
-                return <StartItem key="index" image={item.image} url={item.url} title={item.title} />;
+                return <StartItem key={index} image={item.image} url={item.url} title={item.title} />;
               })}
             </Flex>
           </Flex>
         </Box>
       </Flex>
-    </Box>
+    </SideBody>
   );
 };
 
 const FinalTitle = (props: { text: string }) => {
   return (
-    <Heading color="#5CBEC7" fontSize="2xl" paddingLeft="20px">
+    <Heading color="#5CBEC7" fontSize="xl" paddingLeft="20px">
       {props.text}
     </Heading>
   );
@@ -199,19 +203,20 @@ const FinalItem = (props: TodoData) => {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    width: "100%",
   };
 
   const ItemStyle: CSSObject = {
     backgroundColor: "#fff",
     borderRadius: "5px",
-    padding: "10px",
+    padding: "5px",
   };
 
   return (
     <Box sx={{ ...hoverAction, ...ItemStyle }} onClick={BoxClick}>
       <Flex alignItems="stretch" w="200px">
         <Box w="7px" backgroundColor="salmon" borderRadius="30px" />
-        <Flex w="185px" flexDirection="column" padding="10px">
+        <Flex w="180px" flexDirection="column" padding="10px">
           <Heading color="#C1C3C9" fontSize="10px" paddingBottom="10px" letterSpacing="-1px">
             {props.endDate}
           </Heading>
@@ -224,6 +229,22 @@ const FinalItem = (props: TodoData) => {
         </Flex>
       </Flex>
     </Box>
+  );
+};
+
+const GraphBtn = (props: { text?: string; Icon?: JSX.Element; onClick?: MouseEventHandler<HTMLButtonElement> }) => {
+  const BtnStyle: CSSObject = {
+    color: "#5CBEC7",
+    padding: "0px",
+    height: "30px",
+    minWidth: "30px",
+    fontSize: "12px",
+  };
+  return (
+    <Button sx={BtnStyle} onClick={props.onClick} w="auth">
+      {props.Icon}
+      {props.text}
+    </Button>
   );
 };
 
