@@ -7,7 +7,7 @@ import HomeGraph from "@components/home/HomeGraph";
 const Home: NextPage = () => {
   return (
     <Layout>
-      <Grid templateColumns="repeat(14, 1fr)">
+      <Grid templateColumns="repeat(14, 1fr)" h="100%">
         <GridItem colSpan={5} rowSpan={1}>
           <HomeCenter />
         </GridItem>

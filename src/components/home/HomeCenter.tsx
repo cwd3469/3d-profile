@@ -21,6 +21,11 @@ import random from "@utils/random";
 import { Mybodyinfo, TodoData } from "@components/home/type";
 import { AddIcon } from "@chakra-ui/icons";
 import { MouseEventHandler } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Mousewheel, Scrollbar } from "swiper";
+
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
     textAlign: "center",
@@ -93,8 +98,8 @@ const HomeCenter = () => {
   return (
     <Box p={4} w="100%" h="100%">
       <Flex flexDirection="column" w="100%" h="100%">
-        <Box h="30px"></Box>
-        <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px" sx={shadow}>
+        <Box h="20px"></Box>
+        <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px">
           <Box position="relative" w="100%" h="85px">
             <Flex justifyContent="center">
               <Avatar sx={shadow} size="xl" name="Segun Adebayo" src={MybodyInfo.autherProfileImage} top="-25px" />
@@ -125,9 +130,9 @@ const HomeCenter = () => {
             })}
           </Flex>
         </Box>
-        <Box h="30px"></Box>
+        <Box h="20px"></Box>
         <Box w="100%">
-          <Flex justifyContent="space-between" marginBottom="20px">
+          <Flex justifyContent="space-between" paddingBottom="15px">
             <Heading textAlign="center" fontSize="m" color="#5CBEC7">
               Todo day
             </Heading>
@@ -135,14 +140,19 @@ const HomeCenter = () => {
               26 Aug 2022
             </Heading>
           </Flex>
-          <Box bg="#FFFFFF" borderRadius="30px" padding="20px" sx={shadow} h="270px" overflowY="scroll" marginBottom="20px">
-            <Flex w="100%" gap="7px" flexDirection="column">
+          <Box bg="#fff" padding="20px" borderRadius="30px">
+            <Swiper direction={"vertical"} slidesPerView={5} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="todo-swiper">
               {TodoData.map((item, index) => {
-                return <TodoItem key={index} todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />;
+                return (
+                  <SwiperSlide key={index}>
+                    <TodoItem todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />
+                  </SwiperSlide>
+                );
               })}
-            </Flex>
+            </Swiper>
           </Box>
-          <Box bg="#FFFFFF" borderRadius="30px" padding="15px 20px" sx={shadow} marginBottom="20px">
+          <Box h="17px"></Box>
+          <Box bg="#FFFFFF" borderRadius="30px" padding="15px 20px" sx={shadow}>
             <Flex flexDirection="column" gap="10px">
               <FormControl display="flex" alignItems="center" justifyContent="space-between">
                 <FormLabel htmlFor="email-alerts" mb="0">
