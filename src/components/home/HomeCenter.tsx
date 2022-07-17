@@ -18,14 +18,13 @@ import {
 } from "@chakra-ui/react";
 import EditIcon from "@mui/icons-material/Edit";
 import random from "@utils/random";
-import { Mybodyinfo, TodoData } from "@components/home/type";
+import type { Mybodyinfo, TodoData, TodoAdd as TodoAddInterface } from "@components/home/type";
 import { AddIcon } from "@chakra-ui/icons";
-import { MouseEventHandler } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Mousewheel, Scrollbar } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Mousewheel, Scrollbar } from "swiper";
-
+import { MouseEventHandler } from "react";
 const HomeCenter = () => {
   const fontCenter: CSSObject = {
     textAlign: "center",
@@ -161,7 +160,7 @@ const HomeCenter = () => {
                 <Switch id="email-alerts" colorScheme="green" />
               </FormControl>
               <Flex alignItems="stretch" gap="5px">
-                <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" h="auth" />
+                <Input placeholder="오늘 할일를 입력해주세요." size="md" bg="#fff" h="auto" />
                 <TodoAdd text="add" Icon={<AddIcon />} />
               </Flex>
             </Flex>
@@ -186,14 +185,7 @@ const TodoItem = (props: TodoData) => {
   );
 };
 
-interface TodoAdd {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  text?: string;
-  Icon?: JSX.Element;
-  padding?: string;
-  fontSize?: string;
-}
-export const TodoAdd = (props: TodoAdd) => {
+export const TodoAdd = (props: TodoAddInterface) => {
   return (
     <Button padding={props.padding ? props.padding : "10px 20px"} h="auto" bg="#CEEBEE" color="#5CBEC7" onClick={props.onClick}>
       <Flex flexDirection="column" alignItems="center" gap="5px" justifyContent="center">

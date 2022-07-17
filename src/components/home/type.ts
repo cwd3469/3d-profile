@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export interface Mybodyinfo {
     autherProfileImage: string,
     autherName:string,
@@ -16,3 +18,11 @@ export interface TodoData {
       todoDate?:string,
       endDate?:string
 }
+
+export interface TodoAdd {
+    onClick?: MouseEventHandler<HTMLButtonElement>;
+    text?: string;
+    Icon?: JSX.Element;
+    padding?: string;
+    fontSize?: string;
+  }

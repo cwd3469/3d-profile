@@ -26,15 +26,4 @@ const Layout = (props: Layout_t) => {
   );
 };
 
-export const SideBody = (props: { children: JSX.Element }) => {
-  const sideBodyStyle: CSSObject = {
-    bg: "#fff",
-    h: "100%",
-    w: "100%",
-    borderRadius: "60px 0 0 60px",
-    padding: "30px",
-  };
-  return <Box sx={sideBodyStyle}>{props.children}</Box>;
-};
-
 export default Layout;
