@@ -2,14 +2,14 @@ import React, { MouseEventHandler } from "react";
 import { Box, Text, GridItem, Heading, Flex, CSSObject, background, Image, Button } from "@chakra-ui/react";
 import random from "@utils/random";
 import { TodoData } from "@components/home/type";
-import { TodoAdd } from "./HomeCenter";
-import { AddIcon, StarIcon } from "@chakra-ui/icons";
+import { StarIcon } from "@chakra-ui/icons";
 import { ChartList } from "@components/common/Chart";
-import { SideBody } from "@components/common/Layout";
+import { Mousewheel, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Mousewheel, Scrollbar } from "swiper";
+import KBox from "@components/common/KBox";
+import { GraphBtn } from "@components/common/KButton";
 
 interface StartItem {
   url: string;
@@ -89,12 +89,12 @@ const HomeGraph = () => {
     setChartFilter(txt);
   };
   return (
-    <SideBody>
-      <Flex flexDirection="column" w="100%" h="100%" gap="10px">
+    <KBox>
+      <Flex flexDirection="column" w="100%" h="100%" gap="20px">
         <Box>
           <Flex flexDirection="column" gap="10px" paddingTop="10px">
             <Flex justifyContent="space-between" alignItems="center">
-              <FinalTitle text=" Final goal" />
+              <SectionTitle text=" Final goal" />
               <Flex alignItems="center" gap="10px">
                 <GraphBtn Icon={<StarIcon />} />
                 <Heading fontSize="sm" color="#5CBEC7">
@@ -124,7 +124,7 @@ const HomeGraph = () => {
         <Box>
           <Flex flexDirection="column" gap="10px" paddingTop="10px">
             <Flex justifyContent="space-between" alignItems="center">
-              <FinalTitle text="Todo Chart" />
+              <SectionTitle text="Todo Chart" />
               <Flex alignItems="center" gap="10px">
                 {arr.map((item, index) => {
                   return <GraphBtn key={index} text={item} onClick={() => selectClick(item)} />;
@@ -137,7 +137,7 @@ const HomeGraph = () => {
         <Box>
           <Flex flexDirection="column" gap="10px" paddingTop="10px">
             <Flex justifyContent="space-between" alignItems="center">
-              <FinalTitle text="Go Run!" />
+              <SectionTitle text="Go Run!" />
               <Flex alignItems="center" gap="10px">
                 <GraphBtn Icon={<StarIcon lineHeight="1" />} />
                 <Heading fontSize="sm" color="#5CBEC7">
@@ -153,13 +153,13 @@ const HomeGraph = () => {
           </Flex>
         </Box>
       </Flex>
-    </SideBody>
+    </KBox>
   );
 };
 
-const FinalTitle = (props: { text: string }) => {
+export const SectionTitle = (props: { text: string }) => {
   return (
-    <Heading color="#5CBEC7" fontSize="xl" paddingLeft="20px">
+    <Heading color="#5CBEC7" fontSize="xl">
       {props.text}
     </Heading>
   );
@@ -229,22 +229,6 @@ const FinalItem = (props: TodoData) => {
         </Flex>
       </Flex>
     </Box>
-  );
-};
-
-const GraphBtn = (props: { text?: string; Icon?: JSX.Element; onClick?: MouseEventHandler<HTMLButtonElement> }) => {
-  const BtnStyle: CSSObject = {
-    color: "#5CBEC7",
-    padding: "0px",
-    height: "30px",
-    minWidth: "30px",
-    fontSize: "12px",
-  };
-  return (
-    <Button sx={BtnStyle} onClick={props.onClick} w="auth">
-      {props.Icon}
-      {props.text}
-    </Button>
   );
 };
 

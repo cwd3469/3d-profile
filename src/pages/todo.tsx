@@ -7,7 +7,7 @@ import TodoSide from "@components/todo/TodoSide";
 const Todo: NextPage = () => {
   return (
     <Layout>
-      <Grid templateColumns="repeat(14, 1fr)">
+      <Grid templateColumns="repeat(14, 1fr)" height="100%">
         <GridItem colSpan={5} rowSpan={1}>
           <TodoCenter />
         </GridItem>
