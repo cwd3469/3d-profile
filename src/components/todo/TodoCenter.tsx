@@ -20,7 +20,32 @@ const TodoCenter = () => {
       endDate: "2032.02.10",
       todoList: ["매일매일 1커밋", "매일매일 회고 작성", "모던 자바스크립트 Deep Dive 정독 중입니다."],
     },
+    {
+      goalsId: "222",
+      goalsIcon: "https://cdn-icons-png.flaticon.com/512/6561/6561877.png",
+      goalsTitle: "시니어 개발자!!!",
+      startDate: "2022.02.10",
+      endDate: "2032.02.10",
+      todoList: ["매일매일 1커밋", "매일매일 회고 작성", "모던 자바스크립트 Deep Dive 정독 중입니다."],
+    },
+    {
+      goalsId: "222",
+      goalsIcon: "https://cdn-icons-png.flaticon.com/512/6561/6561877.png",
+      goalsTitle: "시니어 개발자!!!",
+      startDate: "2022.02.10",
+      endDate: "2032.02.10",
+      todoList: ["매일매일 1커밋", "매일매일 회고 작성", "모던 자바스크립트 Deep Dive 정독 중입니다."],
+    },
+    {
+      goalsId: "222",
+      goalsIcon: "https://cdn-icons-png.flaticon.com/512/6561/6561877.png",
+      goalsTitle: "시니어 개발자!!!",
+      startDate: "2022.02.10",
+      endDate: "2032.02.10",
+      todoList: ["매일매일 1커밋", "매일매일 회고 작성", "모던 자바스크립트 Deep Dive 정독 중입니다."],
+    },
   ];
+
   return (
     <Box p="30px" h="100%" w="100%">
       <Flex flexDirection="column">
