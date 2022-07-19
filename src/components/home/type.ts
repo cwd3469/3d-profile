@@ -17,6 +17,7 @@ export interface TodoData {
       todoCheck: boolean,
       todoDate?:string,
       endDate?:string
+      weeks?:Array<string>,
 }
 
 export interface TodoAdd {

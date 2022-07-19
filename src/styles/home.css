@@ -19,3 +19,24 @@
 .detail-swiper-item{
   padding:10px
 }
+
+.edit-todo {
+  height:220px;
+  width:100%;
+  padding:10px 0px !important;
+}
+.date-picker-input{
+  width:75px
+}
+.date-picker-input * {
+  line-height: 1;
+}
+.date-picker-input input{
+  cursor: pointer;
+  width:100%;
+  background-color: transparent;
+}
+.date-picker-input input:focus-visible {
+  outline:0px;
+
+}
