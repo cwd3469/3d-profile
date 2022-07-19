@@ -17,20 +17,20 @@ const Menu = () => {
       name: "Dashboard",
     },
     {
-      path: "/todo",
+      path: "/todo?mode=view",
       Icon: AddCircleOutline,
       name: "Todo",
     },
-    {
-      path: "/graph",
-      Icon: Equalizer,
-      name: "Graph",
-    },
-    {
-      path: "/post",
-      Icon: Signpost,
-      name: "Post",
-    },
+    // {
+    //   path: "/graph",
+    //   Icon: Equalizer,
+    //   name: "Graph",
+    // },
+    // {
+    //   path: "/post",
+    //   Icon: Signpost,
+    //   name: "Post",
+    // },
     {
       path: "/mypage",
       Icon: AccountCircle,

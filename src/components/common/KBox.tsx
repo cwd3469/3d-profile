@@ -9,6 +9,7 @@ interface WhiteBox {
   children: JSX.Element;
   type?: BoxCase;
   width?: string;
+  position?: string;
 }
 
 const KBox = (props: WhiteBox) => {
@@ -18,6 +19,7 @@ const KBox = (props: WhiteBox) => {
     w: props.type === BoxCase.small ? props.width : "100%",
     borderRadius: props.type === BoxCase.small ? "20px" : "60px 0 0 60px",
     padding: props.type === BoxCase.small ? "15px" : "30px",
+    position: props.position ? props.position : "static",
   };
   return <Box sx={sideBodyStyle}>{props.children}</Box>;
 };
