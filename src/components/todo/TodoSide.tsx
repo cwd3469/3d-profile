@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import { Heading, Box, Flex, Text, Checkbox, CSSObject, Input, Textarea, Button } from "@chakra-ui/react";
+import { Heading, Box, Flex, Text, Checkbox, CSSObject } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, AddIcon } from "@chakra-ui/icons";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel, Scrollbar } from "swiper";
 import { GraphBtn, RoundBtn } from "@components/common/KButton";
@@ -10,9 +9,9 @@ import { SectionTitle } from "@components/home/HomeGraph";
 import { TodoData } from "@components/home/type";
 import { GoalsType } from "@components/todo/type";
 import random from "@utils/random";
-
 import "swiper/css";
 import "swiper/css/pagination";
+import TodoEdit from "@components/todo/TodoEdit";
 
 const TodoSide = () => {
   const data: GoalsType = {
@@ -106,58 +105,34 @@ const TodoSide = () => {
     <KBox position="relative">
       <>
         {query.mode === "view" ? (
-          <>
-            <Flex flexDirection="column" gap="20px">
-              <SectionTitle text="Goals Detail" />
-              <Flex>
-                <DetailHead {...data} />
-              </Flex>
-              <Swiper direction={"vertical"} slidesPerView={6} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="detail-todo">
-                {todoData.map((todo, index) => {
-                  return (
-                    <SwiperSlide key={index} className="detail-swiper-item">
-                      {" "}
-                      <DetailTodo {...todo} />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+          <Flex flexDirection="column" gap="20px">
+            <SectionTitle text="Goals Detail" />
+            <Flex>
+              <DetailHead {...data} />
             </Flex>
+            <Swiper direction={"vertical"} slidesPerView={6} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="detail-todo">
+              {todoData.map((todo, index) => {
+                return (
+                  <SwiperSlide key={index} className="detail-swiper-item">
+                    {" "}
+                    <DetailTodo {...todo} />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
             <Box position="absolute" bottom="10px" right="10px" zIndex="1">
               <RoundBtn big Icon={<AddIcon />} onClick={() => router.push("/todo?mode=edit")} />
             </Box>
-          </>
+          </Flex>
         ) : (
-          <>
-            <Flex flexDirection="column" gap="15px">
-              <Flex gap="10px" justifyContent="space-between" alignItems="center">
-                <RoundBtn Icon={<AddAPhotoIcon />} big />
-                <Input placeholder="large size" size="lg" w="85%" />
-              </Flex>
-              <Textarea placeholder="Here is a sample placeholder" resize="none" height="160px" />
-              <Swiper direction={"vertical"} slidesPerView={6} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="detail-todo">
-                {editTodo.map((todo, index) => {
-                  return (
-                    <SwiperSlide key={index} className="detail-swiper-item">
-                      {" "}
-                      <DetailTodo {...todo} />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-            </Flex>
-            <Flex justifyContent="space-between" alignItems="center" gap="10px">
-              <Input placeholder="large size" size="lg" />
-              <Button>Todo!</Button>
-            </Flex>
-          </>
+          <TodoEdit />
         )}
       </>
     </KBox>
   );
 };
 
-const DetailTodo = (props: TodoData) => {
+export const DetailTodo = (props: TodoData) => {
   const TodoStype: CSSObject = {
     bg: "#fff",
     borderRadius: "10px",
