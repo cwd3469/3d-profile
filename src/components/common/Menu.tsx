@@ -32,9 +32,9 @@ const Menu = () => {
     //   name: "Post",
     // },
     {
-      path: "/mypage",
+      path: "/career",
       Icon: AccountCircle,
-      name: "MyPage",
+      name: "Career",
     },
   ];
 
