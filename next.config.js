@@ -9,7 +9,9 @@ const nextConfig = {
   },
   exportPathMap: async function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
     return {
-      "/": { page: "/**" },
+      "/": { page: "/" },
+      "/todo": { page: "/todo" },
+      "/carrer": { page: "/carrer" },
     };
   },
   webpack(config, { webpack }) {
