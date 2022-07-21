@@ -25,24 +25,12 @@ import { Mousewheel, Scrollbar } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { MouseEventHandler } from "react";
+
+const shadow: CSSObject = {
+  boxShadow: "2px 1px 10px 1px rgba(0,0,0,0.1)",
+};
+
 const HomeCenter = () => {
-  const fontCenter: CSSObject = {
-    textAlign: "center",
-  };
-
-  const shadow: CSSObject = {
-    boxShadow: "2px 1px 10px 1px rgba(0,0,0,0.1)",
-  };
-  const MybodyInfo: Mybodyinfo = {
-    autherProfileImage: "https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg",
-    autherName: "JooYoung choi",
-    autherAge: "29 year South Korea",
-    autherBlood: "A",
-    autherHeight: "170",
-    autherWeight: "85",
-    autherId: random(30),
-  };
-
   const TodoData: Array<TodoData> = [
     {
       todoId: random(30),
@@ -96,40 +84,9 @@ const HomeCenter = () => {
 
   return (
     <Box p={4} w="100%" h="100%">
-      <Flex flexDirection="column" w="100%" h="100%">
+      <Flex flexDirection="column" w="100%" h="100%" gap="20px">
         <Box h="20px"></Box>
-        <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px">
-          <Box position="relative" w="100%" h="85px">
-            <Flex justifyContent="center">
-              <Avatar sx={shadow} size="xl" name="Segun Adebayo" src={MybodyInfo.autherProfileImage} top="-25px" />
-            </Flex>
-          </Box>
-          <Heading sx={fontCenter} fontSize="md" paddingBottom="2px">
-            {MybodyInfo.autherName}
-          </Heading>
-          <Text sx={fontCenter} fontSize="sm" color="#C3C4C9">
-            {MybodyInfo.autherAge}
-          </Text>
-          <Flex justifyContent="center" paddingTop="20px">
-            {[MybodyInfo.autherBlood, MybodyInfo.autherHeight, MybodyInfo.autherWeight].map((item, index) => {
-              return (
-                <Flex key={index} flexDirection="column" w="30%">
-                  <Heading textAlign="center" fontSize="sm" color="#5CBEC7">
-                    {index === 0 ? "Blood" : index === 1 ? "Height" : "Weight"}
-                  </Heading>
-                  <Flex alignItems="end" gap="2px" justifyContent="center" paddingTop="5px">
-                    {" "}
-                    <Heading textAlign="center" fontSize="xl" fontWeight="bold">
-                      {item}
-                    </Heading>
-                    <Heading fontSize="sm">{index === 0 ? "" : index === 1 ? "cm" : "kg"}</Heading>
-                  </Flex>
-                </Flex>
-              );
-            })}
-          </Flex>
-        </Box>
-        <Box h="20px"></Box>
+        <ProfileInfo />
         <Box w="100%">
           <Flex justifyContent="space-between" paddingBottom="15px">
             <Heading textAlign="center" fontSize="m" color="#5CBEC7">
@@ -166,6 +123,51 @@ const HomeCenter = () => {
             </Flex>
           </Box>
         </Box>
+      </Flex>
+    </Box>
+  );
+};
+
+export const ProfileInfo = () => {
+  const MybodyInfo: Mybodyinfo = {
+    autherProfileImage: "https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg",
+    autherName: "JooYoung choi",
+    autherAge: "29 year South Korea",
+    autherBlood: "A",
+    autherHeight: "170",
+    autherWeight: "85",
+    autherId: random(30),
+  };
+  return (
+    <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px">
+      <Box position="relative" w="100%" h="85px">
+        <Flex justifyContent="center">
+          <Avatar sx={shadow} size="xl" name="Segun Adebayo" src={MybodyInfo.autherProfileImage} top="-25px" />
+        </Flex>
+      </Box>
+      <Heading textAlign="center" fontSize="md" paddingBottom="2px">
+        {MybodyInfo.autherName}
+      </Heading>
+      <Text textAlign="center" fontSize="sm" color="#C3C4C9">
+        {MybodyInfo.autherAge}
+      </Text>
+      <Flex justifyContent="center" paddingTop="20px">
+        {[MybodyInfo.autherBlood, MybodyInfo.autherHeight, MybodyInfo.autherWeight].map((item, index) => {
+          return (
+            <Flex key={index} flexDirection="column" w="30%">
+              <Heading textAlign="center" fontSize="sm" color="#5CBEC7">
+                {index === 0 ? "Blood" : index === 1 ? "Height" : "Weight"}
+              </Heading>
+              <Flex alignItems="end" gap="2px" justifyContent="center" paddingTop="5px">
+                {" "}
+                <Heading textAlign="center" fontSize="xl" fontWeight="bold">
+                  {item}
+                </Heading>
+                <Heading fontSize="sm">{index === 0 ? "" : index === 1 ? "cm" : "kg"}</Heading>
+              </Flex>
+            </Flex>
+          );
+        })}
       </Flex>
     </Box>
   );

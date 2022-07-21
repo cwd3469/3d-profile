@@ -144,6 +144,7 @@ export const DetailTodo = (props: TodoData) => {
       <Flex justifyContent="space-between">
         <Text fontSize="md">{props.todoTitle}</Text>
         <Flex alignItems="center" gap="10px">
+          <Flex></Flex>
           <Checkbox size="lg" onClick={() => console.log(props.todoId)} />
           <GraphBtn Icon={<EditIcon />} onClick={() => console.log(props.todoId)} />
           <GraphBtn Icon={<DeleteIcon />} onClick={() => console.log(props.todoId)} />
