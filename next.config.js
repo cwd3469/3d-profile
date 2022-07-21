@@ -11,7 +11,7 @@ const nextConfig = {
     return {
       "/": { page: "/" },
       "/todo": { page: "/todo" },
-      "/carrer": { page: "/carrer" },
+      "/career": { page: "/career" },
     };
   },
   webpack(config, { webpack }) {
