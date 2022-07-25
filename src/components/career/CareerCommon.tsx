@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Button, CSSObject, Flex, Heading, Text, Tag } from "@chakra-ui/react";
+import { Box, Button, CSSObject, Flex, Heading, Text, Tag, Link } from "@chakra-ui/react";
 import { CareerBlock as CareerBlockInterface } from "@components/career/type";
+import CareerEdit from "./CareerEdit";
 
 export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
   const [onEdit, setOnEdit] = React.useState<boolean>(false);
@@ -8,11 +9,13 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
   const handleEditClose = () => setOnEdit(false);
   const careerBox: CSSObject = {
     border: "1px solid #ddd",
-    padding: "20px",
-    borderRadius: "20px",
+    padding: "25px",
+    borderRadius: "30px",
     bg: "#fff",
     width: "100%",
   };
+  fetch("https://api.github.com/repos/cwd3469/cwd3469/commits").then((res) => console.log(res.json()));
+
   return (
     <Box sx={careerBox}>
       <Flex flexDirection="column" gap="10px">
@@ -24,15 +27,7 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
             {props.btnName ? props.btnName : "+ 추가"}
           </Button> */}
         </Flex>
-        {/* {onEdit ? (
-          <Box border="1px solid #ddd" borderRadius="15px" h="100px">
-            <Button bg="#089BAB" color="#fff" onClick={handleEditClose}>
-              취소
-            </Button>
-          </Box>
-        ) : (
-          ""
-        )} */}
+        {/* <CareerEdit close={handleEditClose} /> */}
         <Box flexGrow="8">
           <Flex flexDirection="column" gap="25px">
             {props.section?.map((section, sectionIndex) => {
@@ -45,19 +40,55 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
                   gap="10px"
                 >
                   <Box w="200px">
-                    <Text color="gray.500">{section.date}</Text>
+                    <Text color="gray.500" wordBreak="keep-all">
+                      {section.date}
+                    </Text>
                   </Box>
                   <Flex flexDirection="column" w="100%" gap="7px">
                     <Heading fontSize="xl" color="#333" flexGrow="1">
                       {section.sectionTitle}
                     </Heading>
-                    {section.subheadings ? <Text>{section.subheadings}</Text> : ""}
-                    <Flex gap="5px">
-                      {section.tag?.map((tag, idx) => {
-                        return <Tag key={idx}>{tag}</Tag>;
-                      })}
-                    </Flex>
-                    <Text p="5px 0px">{section.setTitle}</Text>
+
+                    {section.subheadings ? <Text wordBreak="keep-all">{section.subheadings}</Text> : ""}
+
+                    {section.tag ? (
+                      <Flex gap="5px" flexWrap="wrap">
+                        {section.tag?.map((tag, idx) => {
+                          return (
+                            <Tag size="sm" key={idx}>
+                              {tag}
+                            </Tag>
+                          );
+                        })}
+                      </Flex>
+                    ) : (
+                      ""
+                    )}
+
+                    <Text fontSize="15px">{section.setTitle}</Text>
+                    {section.sectionContents ? (
+                      <Flex>
+                        <Box w="20px" />
+                        <Flex flexDirection="column" gap="3px">
+                          {section.sectionContents.map((text, idx) => {
+                            return (
+                              <Text key={idx} wordBreak="keep-all">
+                                {text}
+                              </Text>
+                            );
+                          })}
+                        </Flex>
+                      </Flex>
+                    ) : (
+                      ""
+                    )}
+                    {section.sectionLink ? (
+                      <Link color="teal.500" href={`${section.sectionLink}`} target="_blank">
+                        {section.sectionLink}
+                      </Link>
+                    ) : (
+                      ""
+                    )}
                     <Flex flexDirection="column" gap="25px">
                       {section.list?.map((item, index) => {
                         return (
