@@ -47,7 +47,7 @@ const TodoCenter = () => {
   ];
 
   return (
-    <Box p="30px" h="100%" w="100%">
+    <Box p={4} h="100%" w="100%">
       <Flex flexDirection="column">
         <Flex flexDirection="column" padding="15px 0px" gap="20px">
           <SectionTitle text="My Todo List" />
