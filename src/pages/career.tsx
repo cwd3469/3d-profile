@@ -8,10 +8,10 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Grid templateColumns="repeat(14, 1fr)" h="100%">
-        <GridItem colSpan={4} rowSpan={1}>
+        <GridItem colSpan={5} rowSpan={1}>
           <CareerCenter />
         </GridItem>
-        <GridItem colSpan={10} rowSpan={1}>
+        <GridItem colSpan={9} rowSpan={1}>
           <CareerSide />
         </GridItem>
       </Grid>

@@ -51,6 +51,7 @@ const Menu = () => {
 
 const MenuNav = (props: NavList) => {
   const router = useRouter();
+
   const style = {
     color: router.asPath === props.path ? "#089BAB" : "#fff",
     backgroundColor: router.asPath === props.path ? "#fff" : "#089BAB",

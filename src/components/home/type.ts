@@ -27,3 +27,9 @@ export interface TodoAdd {
     padding?: string;
     fontSize?: string;
   }
+
+export interface StartItem {
+  url: string;
+  title: string;
+  image: string;
+}

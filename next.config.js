@@ -14,6 +14,7 @@ const nextConfig = {
       "/career": { page: "/career" },
     };
   },
+
   webpack(config, { webpack }) {
     config.resolve = {
       alias: {

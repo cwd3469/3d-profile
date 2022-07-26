@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import { Box, Text, GridItem, Heading, Flex, CSSObject, background, Image, Button } from "@chakra-ui/react";
 import random from "@utils/random";
-import { TodoData } from "@components/home/type";
+import { TodoData, StartItem as StartItemType } from "@components/home/type";
 import { StarIcon } from "@chakra-ui/icons";
 import { ChartList } from "@components/common/Chart";
 import { Mousewheel, Scrollbar } from "swiper";
@@ -10,12 +10,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import KBox from "@components/common/KBox";
 import { GraphBtn } from "@components/common/KButton";
-
-interface StartItem {
-  url: string;
-  title: string;
-  image: string;
-}
 
 const HomeGraph = () => {
   const data: Array<TodoData> = [
@@ -60,7 +54,7 @@ const HomeGraph = () => {
       endDate: "21 Feb , 2032",
     },
   ];
-  const myPage: Array<StartItem> = [
+  const myPage: Array<StartItemType> = [
     {
       url: "https://github.com/cwd3469",
       image: "https://cdn-icons-png.flaticon.com/512/25/25231.png",
@@ -76,11 +70,6 @@ const HomeGraph = () => {
       url: "https://www.notion.so/c793454c6cae45f893c9f7e0d89dc84a",
       image: "https://www.notion.so/cdn-cgi/image/format=auto,width=640,quality=100/front-static/shared/icons/notion-app-icon-3d.png",
       title: "Notion",
-    },
-    {
-      url: "https://github.com/cwd3469",
-      image: "https://cdn-icons-png.flaticon.com/512/733/733579.png",
-      title: "Twitter",
     },
   ];
   const [chartFilter, setChartFilter] = React.useState(String);
@@ -173,7 +162,7 @@ const hoverAction: CSSObject = {
   },
 };
 
-const StartItem = (props: StartItem) => {
+const StartItem = (props: StartItemType) => {
   const ItmeStyle: CSSObject = {
     cursor: "pointer",
     borderRadius: "30px",
@@ -185,7 +174,7 @@ const StartItem = (props: StartItem) => {
     <Box sx={{ ...hoverAction, ...ItmeStyle }}>
       <Flex flexDirection="column" justifyContent="center" alignItems="center" height="100%" gap="10px">
         <Box w="60px" h="60px" bg="#fff" borderRadius="100%" alignItems="center" justifyContent="center">
-          <Image w="100%" src={props.image} alt="Git hub" />
+          <Image w="100%" src={props.image} alt={props.title} />
         </Box>
         <Heading color="#000" fontSize="md">
           {props.title}
