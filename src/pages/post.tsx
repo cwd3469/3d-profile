@@ -1,6 +1,6 @@
-import type { NextPage } from "next";
-import Layout from "@components/common/Layout";
-import { Box, Flex, Center, Square, Text } from "@chakra-ui/react";
+import type { NextPage } from 'next';
+import Layout from '@components/common/Layout';
+import { Box, Flex, Center, Square, Text } from '@chakra-ui/react';
 
 const Post: NextPage = () => {
   return (

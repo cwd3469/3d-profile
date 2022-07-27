@@ -1,5 +1,5 @@
-import { Box, Button, Input, Flex, Text, Grid } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Button, Input, Flex, Text, Grid } from '@chakra-ui/react';
+import { useState } from 'react';
 interface CareerEdit {
   close: () => void;
 }
@@ -14,7 +14,7 @@ interface CareerInput {
 }
 
 const CareerEdit = (props: CareerEdit) => {
-  const [projectTitle, setProjectTitle] = useState("");
+  const [projectTitle, setProjectTitle] = useState('');
   return (
     <Box border="1px solid #ddd" borderRadius="15px" p="14px">
       <Flex flexDirection="column" gap="15px">

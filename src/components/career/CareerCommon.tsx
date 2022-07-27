@@ -1,21 +1,19 @@
-import React from "react";
-import { Box, Button, CSSObject, Flex, Heading, Text, Tag, Link } from "@chakra-ui/react";
-import { CareerBlock as CareerBlockInterface } from "@components/career/type";
-import CareerEdit from "./CareerEdit";
+import React from 'react';
+import { Box, Button, CSSObject, Flex, Heading, Text, Tag, Link } from '@chakra-ui/react';
+import { CareerBlock as CareerBlockInterface } from '@components/career/type';
+import CareerEdit from './CareerEdit';
 
 export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
   const [onEdit, setOnEdit] = React.useState<boolean>(false);
   const handleEditOn = () => setOnEdit(true);
   const handleEditClose = () => setOnEdit(false);
   const careerBox: CSSObject = {
-    border: "1px solid #ddd",
-    padding: "25px",
-    borderRadius: "30px",
-    bg: "#fff",
-    width: "100%",
+    border: '1px solid #ddd',
+    padding: '25px',
+    borderRadius: '30px',
+    bg: '#fff',
+    width: '100%',
   };
-  fetch("https://api.github.com/repos/cwd3469/cwd3469/commits").then((res) => console.log(res.json()));
-
   return (
     <Box sx={careerBox}>
       <Flex flexDirection="column" gap="10px">
@@ -35,10 +33,9 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
                 <Flex
                   alignContent="stretch"
                   key={sectionIndex}
-                  borderBottom={sectionIndex + 1 === props.section?.length ? "" : "1px solid #ddd"}
+                  borderBottom={sectionIndex + 1 === props.section?.length ? '' : '1px solid #ddd'}
                   paddingBottom="20px"
-                  gap="10px"
-                >
+                  gap="10px">
                   <Box w="200px">
                     <Text color="gray.500" wordBreak="keep-all">
                       {section.date}
@@ -49,7 +46,7 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
                       {section.sectionTitle}
                     </Heading>
 
-                    {section.subheadings ? <Text wordBreak="keep-all">{section.subheadings}</Text> : ""}
+                    {section.subheadings ? <Text wordBreak="keep-all">{section.subheadings}</Text> : ''}
 
                     {section.tag ? (
                       <Flex gap="5px" flexWrap="wrap">
@@ -62,7 +59,7 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
                         })}
                       </Flex>
                     ) : (
-                      ""
+                      ''
                     )}
 
                     <Text fontSize="15px">{section.setTitle}</Text>
@@ -80,14 +77,14 @@ export const CareerBlock = (props: CareerBlockInterface): JSX.Element => {
                         </Flex>
                       </Flex>
                     ) : (
-                      ""
+                      ''
                     )}
                     {section.sectionLink ? (
                       <Link color="teal.500" href={`${section.sectionLink}`} target="_blank">
                         {section.sectionLink}
                       </Link>
                     ) : (
-                      ""
+                      ''
                     )}
                     <Flex flexDirection="column" gap="25px">
                       {section.list?.map((item, index) => {

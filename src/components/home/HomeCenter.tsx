@@ -2,8 +2,6 @@ import {
   Avatar,
   Box,
   CSSObject,
-  Grid,
-  GridItem,
   Flex,
   Text,
   Heading,
@@ -13,21 +11,19 @@ import {
   Button,
   FormControl,
   FormLabel,
-  ComponentWithAs,
-  IconProps,
-} from "@chakra-ui/react";
-import EditIcon from "@mui/icons-material/Edit";
-import random from "@utils/random";
-import type { Mybodyinfo, TodoData, TodoAdd as TodoAddInterface } from "@components/home/type";
-import { AddIcon } from "@chakra-ui/icons";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, Scrollbar } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import { MouseEventHandler } from "react";
+} from '@chakra-ui/react';
+import EditIcon from '@mui/icons-material/Edit';
+import random from '@utils/random';
+import type { Mybodyinfo, TodoData, TodoAdd as TodoAddInterface } from '@components/home/type';
+import { AddIcon } from '@chakra-ui/icons';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel, Scrollbar } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { MouseEventHandler } from 'react';
 
 const shadow: CSSObject = {
-  boxShadow: "2px 1px 10px 1px rgba(0,0,0,0.1)",
+  boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
 };
 
 const HomeCenter = () => {
@@ -35,49 +31,49 @@ const HomeCenter = () => {
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "출근하기",
+      todoTitle: '출근하기',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "영어단어 10개 외우기",
+      todoTitle: '영어단어 10개 외우기',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "낮잠자기",
+      todoTitle: '낮잠자기',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "퇴근하기",
+      todoTitle: '퇴근하기',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "서브프로젝트 home 완료 ",
+      todoTitle: '서브프로젝트 home 완료 ',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "저녁 먹기",
+      todoTitle: '저녁 먹기',
       todoCheck: false,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "장군이 산책",
+      todoTitle: '장군이 산책',
       todoCheck: true,
     },
     {
       todoId: random(30),
       autherId: random(30),
-      todoTitle: "12시 전에 취침",
+      todoTitle: '12시 전에 취침',
       todoCheck: true,
     },
   ];
@@ -97,11 +93,22 @@ const HomeCenter = () => {
             </Heading>
           </Flex>
           <Box bg="#fff" padding="20px" borderRadius="30px">
-            <Swiper direction={"vertical"} slidesPerView={5} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="todo-swiper">
+            <Swiper
+              direction={'vertical'}
+              slidesPerView={5}
+              spaceBetween={0}
+              mousewheel={true}
+              modules={[Mousewheel]}
+              className="todo-swiper">
               {TodoData.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <TodoItem todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />
+                    <TodoItem
+                      todoId={item.todoId}
+                      autherId={item.autherId}
+                      todoTitle={item.todoTitle}
+                      todoCheck={item.todoCheck}
+                    />
                   </SwiperSlide>
                 );
               })}
@@ -130,12 +137,12 @@ const HomeCenter = () => {
 
 export const ProfileInfo = () => {
   const MybodyInfo: Mybodyinfo = {
-    autherProfileImage: "https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg",
-    autherName: "JooYoung choi",
-    autherAge: "29 year South Korea",
-    autherBlood: "A",
-    autherHeight: "170",
-    autherWeight: "85",
+    autherProfileImage: 'https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg',
+    autherName: 'JooYoung choi',
+    autherAge: '29 year South Korea',
+    autherBlood: 'A',
+    autherHeight: '170',
+    autherWeight: '85',
     autherId: random(30),
   };
   return (
@@ -156,14 +163,14 @@ export const ProfileInfo = () => {
           return (
             <Flex key={index} flexDirection="column" w="30%">
               <Heading textAlign="center" fontSize="sm" color="#5CBEC7">
-                {index === 0 ? "Blood" : index === 1 ? "Height" : "Weight"}
+                {index === 0 ? 'Blood' : index === 1 ? 'Height' : 'Weight'}
               </Heading>
               <Flex alignItems="end" gap="2px" justifyContent="center" paddingTop="5px">
-                {" "}
+                {' '}
                 <Heading textAlign="center" fontSize="xl" fontWeight="bold">
                   {item}
                 </Heading>
-                <Heading fontSize="sm">{index === 0 ? "" : index === 1 ? "cm" : "kg"}</Heading>
+                <Heading fontSize="sm">{index === 0 ? '' : index === 1 ? 'cm' : 'kg'}</Heading>
               </Flex>
             </Flex>
           );
@@ -179,7 +186,7 @@ const TodoItem = (props: TodoData) => {
       <Flex justifyContent="space-between">
         <Heading fontSize="sm">{props.todoTitle}</Heading>
         <Flex gap="6px">
-          <EditIcon fontSize="small" sx={{ cursor: "pointer" }} />
+          <EditIcon fontSize="small" sx={{ cursor: 'pointer' }} />
           <Checkbox checked={props.todoCheck} colorScheme="green" />
         </Flex>
       </Flex>
@@ -189,10 +196,15 @@ const TodoItem = (props: TodoData) => {
 
 export const TodoAdd = (props: TodoAddInterface) => {
   return (
-    <Button padding={props.padding ? props.padding : "10px 20px"} h="auto" bg="#CEEBEE" color="#5CBEC7" onClick={props.onClick}>
+    <Button
+      padding={props.padding ? props.padding : '10px 20px'}
+      h="auto"
+      bg="#CEEBEE"
+      color="#5CBEC7"
+      onClick={props.onClick}>
       <Flex flexDirection="column" alignItems="center" gap="5px" justifyContent="center">
         <>{props.Icon}</>
-        <Text fontSize={props.fontSize ? props.fontSize : "10px"}>{props.text}</Text>
+        <Text fontSize={props.fontSize ? props.fontSize : '10px'}>{props.text}</Text>
       </Flex>
     </Button>
   );
