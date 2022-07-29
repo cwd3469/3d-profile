@@ -19,6 +19,7 @@
       "@core/*": ["src/core/*"],
       "@utils/*": ["src/utils/*"],
       "@styles/*": ["src/styles/*"],
+      "@states/*": ["src/states/*"],
       "@components/*": ["src/components/*"],
     }
   },

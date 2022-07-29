@@ -14,88 +14,41 @@ import {
 } from '@chakra-ui/react';
 import EditIcon from '@mui/icons-material/Edit';
 import random from '@utils/random';
-import type { Mybodyinfo, TodoData, TodoAdd as TodoAddInterface } from '@components/home/type';
+import type { Mybodyinfo, TodoData as TodoDataType, TodoAdd as TodoAddInterface } from '@components/home/type';
 import { AddIcon } from '@chakra-ui/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Scrollbar } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { MouseEventHandler } from 'react';
+import { todoListAtom } from '@states/todo';
+import { useRecoilState } from 'recoil';
+import { SectionTitle } from './HomeGraph';
 
 const shadow: CSSObject = {
   boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
 };
 
 const HomeCenter = () => {
-  const TodoData: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '출근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '퇴근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '서브프로젝트 home 완료 ',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '저녁 먹기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '장군이 산책',
-      todoCheck: true,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '12시 전에 취침',
-      todoCheck: true,
-    },
-  ];
+  const [state, setState] = useRecoilState(todoListAtom);
+  const TodoData: Array<TodoDataType> = state.todoData;
 
   return (
     <Box p={4} w="100%" h="100%">
-      <Flex flexDirection="column" w="100%" h="100%" gap="20px">
+      <Flex flexDirection="column" w="100%" h="100%" gap="14px">
         <Box h="20px"></Box>
+        <Flex justifyContent="space-between" paddingBottom="15px">
+          <SectionTitle text="Todo Daily" />
+          <Heading textAlign="center" fontSize="m" color="#A8ADB4">
+            26 Aug 2022
+          </Heading>
+        </Flex>
         <ProfileInfo />
         <Box w="100%">
-          <Flex justifyContent="space-between" paddingBottom="15px">
-            <Heading textAlign="center" fontSize="m" color="#5CBEC7">
-              Todo day
-            </Heading>
-            <Heading textAlign="center" fontSize="m" color="#A8ADB4">
-              26 Aug 2022
-            </Heading>
-          </Flex>
           <Box bg="#fff" padding="20px" borderRadius="30px">
             <Swiper
               direction={'vertical'}
-              slidesPerView={5}
+              slidesPerView={4}
               spaceBetween={0}
               mousewheel={true}
               modules={[Mousewheel]}
