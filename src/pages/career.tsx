@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Layout from "@components/common/Layout";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
-import CareerSide from "@components/career/CareerSide";
-import CareerCenter from "@components/career/CareerCenter";
+import type { NextPage } from 'next';
+import Layout from '@components/common/Layout';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
+import CareerSide from '@components/career/CareerSide';
+import CareerCenter from '@components/career/CareerCenter';
 
 const Home: NextPage = () => {
   return (

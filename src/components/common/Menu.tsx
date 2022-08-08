@@ -1,7 +1,7 @@
-import { Box, Flex, Button, Text, ComponentWithAs, IconProps } from "@chakra-ui/react";
-import { Dashboard, AddCircleOutline, Equalizer, AccountCircle, Signpost, SvgIconComponent } from "@mui/icons-material";
+import { Box, Flex, Button, Text } from '@chakra-ui/react';
+import { Dashboard, AddCircleOutline, AccountCircle, SvgIconComponent } from '@mui/icons-material';
 
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 interface NavList {
   path: string;
@@ -12,29 +12,19 @@ interface NavList {
 const Menu = () => {
   const navList: Array<NavList> = [
     {
-      path: "/",
+      path: '/',
       Icon: Dashboard,
-      name: "Dashboard",
+      name: 'Dashboard',
     },
     {
-      path: "/todo?mode=view",
+      path: '/todo?mode=view',
       Icon: AddCircleOutline,
-      name: "Todo",
+      name: 'Todo',
     },
-    // {
-    //   path: "/graph",
-    //   Icon: Equalizer,
-    //   name: "Graph",
-    // },
-    // {
-    //   path: "/post",
-    //   Icon: Signpost,
-    //   name: "Post",
-    // },
     {
-      path: "/career",
+      path: '/career',
       Icon: AccountCircle,
-      name: "Career",
+      name: 'Career',
     },
   ];
 
@@ -52,9 +42,12 @@ const Menu = () => {
 const MenuNav = (props: NavList) => {
   const router = useRouter();
 
+  // console.log(router.asPath);
+  // console.log(props.path);
+
   const style = {
-    color: router.asPath === props.path ? "#089BAB" : "#fff",
-    backgroundColor: router.asPath === props.path ? "#fff" : "#089BAB",
+    color: '#fff',
+    backgroundColor: '#089BAB',
   };
 
   const handleClick = (e: { preventDefault: () => void }) => {

@@ -1,9 +1,8 @@
+import React from 'react';
 import {
   Avatar,
   Box,
   CSSObject,
-  Grid,
-  GridItem,
   Flex,
   Text,
   Heading,
@@ -13,95 +12,55 @@ import {
   Button,
   FormControl,
   FormLabel,
-  ComponentWithAs,
-  IconProps,
-} from "@chakra-ui/react";
-import EditIcon from "@mui/icons-material/Edit";
-import random from "@utils/random";
-import type { Mybodyinfo, TodoData, TodoAdd as TodoAddInterface } from "@components/home/type";
-import { AddIcon } from "@chakra-ui/icons";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, Scrollbar } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import { MouseEventHandler } from "react";
+} from '@chakra-ui/react';
+import EditIcon from '@mui/icons-material/Edit';
+import random from '@utils/random';
+import type { Mybodyinfo, TodoData as TodoDataType, TodoAdd as TodoAddInterface } from '@components/home/type';
+import { AddIcon } from '@chakra-ui/icons';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { todoListAtom } from '@states/todo';
+import { SectionTitle } from './HomeGraph';
+import { authUserInfo } from '@states/auth';
 
 const shadow: CSSObject = {
-  boxShadow: "2px 1px 10px 1px rgba(0,0,0,0.1)",
+  boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
 };
 
 const HomeCenter = () => {
-  const TodoData: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "출근하기",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "영어단어 10개 외우기",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "낮잠자기",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "퇴근하기",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "서브프로젝트 home 완료 ",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "저녁 먹기",
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "장군이 산책",
-      todoCheck: true,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: "12시 전에 취침",
-      todoCheck: true,
-    },
-  ];
-
+  const [todos, setTodos] = useRecoilState<Array<TodoDataType>>(todoListAtom);
   return (
     <Box p={4} w="100%" h="100%">
-      <Flex flexDirection="column" w="100%" h="100%" gap="20px">
+      <Flex flexDirection="column" w="100%" h="100%" gap="14px">
         <Box h="20px"></Box>
+        <Flex justifyContent="space-between" paddingBottom="15px">
+          <SectionTitle text="Todo Daily" />
+          <Heading textAlign="center" fontSize="m" color="#A8ADB4">
+            26 Aug 2022
+          </Heading>
+        </Flex>
         <ProfileInfo />
         <Box w="100%">
-          <Flex justifyContent="space-between" paddingBottom="15px">
-            <Heading textAlign="center" fontSize="m" color="#5CBEC7">
-              Todo day
-            </Heading>
-            <Heading textAlign="center" fontSize="m" color="#A8ADB4">
-              26 Aug 2022
-            </Heading>
-          </Flex>
           <Box bg="#fff" padding="20px" borderRadius="30px">
-            <Swiper direction={"vertical"} slidesPerView={5} spaceBetween={0} mousewheel={true} modules={[Mousewheel]} className="todo-swiper">
-              {TodoData.map((item, index) => {
+            <Swiper
+              direction={'vertical'}
+              slidesPerView={4}
+              spaceBetween={0}
+              mousewheel={true}
+              modules={[Mousewheel]}
+              className="todo-swiper">
+              {todos.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <TodoItem todoId={item.todoId} autherId={item.autherId} todoTitle={item.todoTitle} todoCheck={item.todoCheck} />
+                    <TodoItem
+                      todoId={item.todoId}
+                      autherId={item.autherId}
+                      todoTitle={item.todoTitle}
+                      todoCheck={item.todoCheck}
+                    />
                   </SwiperSlide>
                 );
               })}
@@ -129,15 +88,7 @@ const HomeCenter = () => {
 };
 
 export const ProfileInfo = () => {
-  const MybodyInfo: Mybodyinfo = {
-    autherProfileImage: "https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg",
-    autherName: "JooYoung choi",
-    autherAge: "29 year South Korea",
-    autherBlood: "A",
-    autherHeight: "170",
-    autherWeight: "85",
-    autherId: random(30),
-  };
+  const MybodyInfo = useRecoilValue<Mybodyinfo>(authUserInfo);
   return (
     <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px">
       <Box position="relative" w="100%" h="85px">
@@ -156,14 +107,14 @@ export const ProfileInfo = () => {
           return (
             <Flex key={index} flexDirection="column" w="30%">
               <Heading textAlign="center" fontSize="sm" color="#5CBEC7">
-                {index === 0 ? "Blood" : index === 1 ? "Height" : "Weight"}
+                {index === 0 ? 'Blood' : index === 1 ? 'Height' : 'Weight'}
               </Heading>
               <Flex alignItems="end" gap="2px" justifyContent="center" paddingTop="5px">
-                {" "}
+                {' '}
                 <Heading textAlign="center" fontSize="xl" fontWeight="bold">
                   {item}
                 </Heading>
-                <Heading fontSize="sm">{index === 0 ? "" : index === 1 ? "cm" : "kg"}</Heading>
+                <Heading fontSize="sm">{index === 0 ? '' : index === 1 ? 'cm' : 'kg'}</Heading>
               </Flex>
             </Flex>
           );
@@ -173,13 +124,13 @@ export const ProfileInfo = () => {
   );
 };
 
-const TodoItem = (props: TodoData) => {
+const TodoItem = (props: TodoDataType) => {
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
       <Flex justifyContent="space-between">
         <Heading fontSize="sm">{props.todoTitle}</Heading>
         <Flex gap="6px">
-          <EditIcon fontSize="small" sx={{ cursor: "pointer" }} />
+          <EditIcon fontSize="small" sx={{ cursor: 'pointer' }} />
           <Checkbox checked={props.todoCheck} colorScheme="green" />
         </Flex>
       </Flex>
@@ -189,10 +140,15 @@ const TodoItem = (props: TodoData) => {
 
 export const TodoAdd = (props: TodoAddInterface) => {
   return (
-    <Button padding={props.padding ? props.padding : "10px 20px"} h="auto" bg="#CEEBEE" color="#5CBEC7" onClick={props.onClick}>
+    <Button
+      padding={props.padding ? props.padding : '10px 20px'}
+      h="auto"
+      bg="#CEEBEE"
+      color="#5CBEC7"
+      onClick={props.onClick}>
       <Flex flexDirection="column" alignItems="center" gap="5px" justifyContent="center">
         <>{props.Icon}</>
-        <Text fontSize={props.fontSize ? props.fontSize : "10px"}>{props.text}</Text>
+        <Text fontSize={props.fontSize ? props.fontSize : '10px'}>{props.text}</Text>
       </Flex>
     </Button>
   );

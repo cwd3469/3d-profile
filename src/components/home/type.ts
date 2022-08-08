@@ -1,34 +1,48 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler } from 'react';
 
 export interface Mybodyinfo {
-    autherProfileImage: string,
-    autherName:string,
-    autherAge: string,
-    autherBlood: string,
-    autherHeight: string,
-    autherWeight: string,
-    autherId:string,
+  autherProfileImage: string;
+  autherName: string;
+  autherAge: string;
+  autherBlood: string;
+  autherHeight: string;
+  autherWeight: string;
+  autherId: string;
 }
 
 export interface TodoData {
-    todoId: string,
-      autherId: string,
-      todoTitle: string, 
-      todoCheck: boolean,
-      todoDate?:string,
-      endDate?:string
-      weeks?:Array<string>,
+  todoId: string;
+  autherId: string;
+  goalId: string;
+  todoTitle: string;
+  todoCheck: boolean;
+  todoDate?: string;
+  endDate?: string;
+  weeks?: Array<string>;
+  onOff: boolean;
+}
+export interface GoalData {
+  goalId: string;
+  goalIcon?: string;
+  autherId: string;
+  goalTitle: string;
+  goalCheck: boolean;
+  startDate?: string;
+  endDate?: string;
+  todoList?: Array<string>;
+  onOff: boolean;
+  memo?: Array<string>;
 }
 
 export interface TodoAdd {
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-    text?: string;
-    Icon?: JSX.Element;
-    padding?: string;
-    fontSize?: string;
-  }
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  text?: string;
+  Icon?: JSX.Element;
+  padding?: string;
+  fontSize?: string;
+}
 
-export interface StartItem {
+export interface CareerPortfolio {
   url: string;
   title: string;
   image: string;

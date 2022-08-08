@@ -6,6 +6,7 @@
       [
         "module-resolver",
         {
+          "ssr": true, "displayName": true, "preprocess": false,
           "root": [
             "./src"
           ],
@@ -13,9 +14,11 @@
             "@core": "./src/core",
             "@utils": "./src/utils",
             "@styles": "./src/styles",
+            "@states": "./src/states",
             "@components": "./src/components"
           }
-        }
+        },
+        "styled-components"
       ]
     ]
   }

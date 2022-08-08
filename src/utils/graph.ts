@@ -1,5 +1,3 @@
-
-export function customGraph():void{
-console.log('graph');
-
+export function customGraph(): void {
+  console.log('graph');
 }
