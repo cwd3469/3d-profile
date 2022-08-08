@@ -11,42 +11,13 @@ import 'swiper/css/pagination';
 import { DetailTodo } from '@components/todo/TodoSide';
 import DatePickerComponent from '@components/common/DatePickerComponent';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { todoListAtom } from '@states/todo';
 
 const TodoEdit = () => {
   const router = useRouter();
   console.log(router);
-  const editTodo: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '출근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-  ];
+  const editTodo = useRecoilValue(todoListAtom);
 
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndtDate] = useState<string>('');

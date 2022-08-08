@@ -60,6 +60,8 @@ const HomeCenter = () => {
                       autherId={item.autherId}
                       todoTitle={item.todoTitle}
                       todoCheck={item.todoCheck}
+                      goalId={item.goalId}
+                      onOff={item.onOff}
                     />
                   </SwiperSlide>
                 );
