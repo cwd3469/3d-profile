@@ -213,9 +213,4 @@ const todoGoalDetailAtom = atom<GoalData>({
   },
 });
 
-const goaltodoListSelector = selector({
-  key: 'todoListCreate',
-  get: ({ get }) => {},
-});
-
-export { todoListAtom, inputState, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom, goaltodoListSelector };
+export { todoListAtom, inputState, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom };

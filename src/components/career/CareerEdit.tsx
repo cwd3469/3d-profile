@@ -7,7 +7,7 @@ interface CareerEdit {
 interface CareerInput {
   type: string;
   label: string;
-  outData?: () => {};
+  outData?: () => void;
   inData: string;
   grow: string;
   placeholder: string;
