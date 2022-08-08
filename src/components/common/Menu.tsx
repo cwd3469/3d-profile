@@ -1,5 +1,5 @@
-import { Box, Flex, Button, Text, ComponentWithAs, IconProps } from '@chakra-ui/react';
-import { Dashboard, AddCircleOutline, Equalizer, AccountCircle, Signpost, SvgIconComponent } from '@mui/icons-material';
+import { Box, Flex, Button, Text } from '@chakra-ui/react';
+import { Dashboard, AddCircleOutline, AccountCircle, SvgIconComponent } from '@mui/icons-material';
 
 import { useRouter } from 'next/router';
 
@@ -21,16 +21,6 @@ const Menu = () => {
       Icon: AddCircleOutline,
       name: 'Todo',
     },
-    // {
-    //   path: "/graph",
-    //   Icon: Equalizer,
-    //   name: "Graph",
-    // },
-    // {
-    //   path: "/post",
-    //   Icon: Signpost,
-    //   name: "Post",
-    // },
     {
       path: '/career',
       Icon: AccountCircle,
@@ -52,9 +42,12 @@ const Menu = () => {
 const MenuNav = (props: NavList) => {
   const router = useRouter();
 
+  // console.log(router.asPath);
+  // console.log(props.path);
+
   const style = {
-    color: router.asPath === props.path ? '#089BAB' : '#fff',
-    backgroundColor: router.asPath === props.path ? '#fff' : '#089BAB',
+    color: '#fff',
+    backgroundColor: '#089BAB',
   };
 
   const handleClick = (e: { preventDefault: () => void }) => {

@@ -2,103 +2,22 @@ import { useRouter } from 'next/router';
 import { Heading, Box, Flex, Text, Checkbox, CSSObject } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Scrollbar } from 'swiper';
+import { Mousewheel } from 'swiper';
 import { GraphBtn, RoundBtn } from '@components/common/KButton';
 import KBox from '@components/common/KBox';
 import { SectionTitle } from '@components/home/HomeGraph';
-import { TodoData } from '@components/home/type';
-import { GoalsType } from '@components/todo/type';
-import random from '@utils/random';
+import { GoalData, TodoData } from '@components/home/type';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import TodoEdit from '@components/todo/TodoEdit';
+import { useRecoilValue } from 'recoil';
+import { todoGoalDetailAtom, todoListAtom } from '@states/todo';
 
 const TodoSide = () => {
-  const data: GoalsType = {
-    goalsId: random(30),
-    goalsIcon: 'https://cdn-icons-png.flaticon.com/512/6561/6561877.png',
-    goalsTitle: '시니어 개발자!!!',
-    startDate: '2022.02.10',
-    endDate: '2032.02.10',
-    memo: [
-      '1. 매일매일 꾸준히 한다.',
-      '2. 1주일에 한번씩 피드백을 받는다.',
-      '3. 어려웠던 부분이 어떤 부분이라도 블로그에 남긴다.',
-      '4. 환경에 영향을 받지 말자 내 가방에는 언제나 노트북이 있다!!',
-    ],
-  };
+  const goal = useRecoilValue(todoGoalDetailAtom);
+  const todoData = useRecoilValue(todoListAtom);
+  // const editTodo = useRecoilValue(todoListAtom);
 
-  const todoData: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '출근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '퇴근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '서브프로젝트 home 완료 ',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '저녁 먹기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '장군이 산책',
-      todoCheck: true,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '12시 전에 취침',
-      todoCheck: true,
-    },
-  ];
-
-  const editTodo: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '출근하기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-    },
-  ];
   const router = useRouter();
   const { query } = router;
   return (
@@ -108,7 +27,7 @@ const TodoSide = () => {
           <Flex flexDirection="column" gap="20px">
             <SectionTitle text="Goals Detail" />
             <Flex>
-              <DetailHead {...data} />
+              <DetailHead {...goal} />
             </Flex>
             <Swiper
               direction={'vertical'}
@@ -160,7 +79,7 @@ export const DetailTodo = (props: TodoData) => {
   );
 };
 
-const DetailHead = (props: GoalsType) => {
+const DetailHead = (props: GoalData) => {
   const detailHead: CSSObject = {
     width: '100px',
     height: '100px',
@@ -188,7 +107,7 @@ const DetailHead = (props: GoalsType) => {
     <Box sx={boxSx}>
       <Flex justifyContent="space-between">
         <Flex flexDirection="column" alignItems="center" gap="10px" w="30%">
-          <Box sx={detailHead} backgroundImage={props.goalsIcon} />
+          <Box sx={detailHead} backgroundImage={props.goalIcon} />
           <Heading fontSize="xl">D-3650</Heading>
           <Box>
             <Text fontSize="12px" color="#999">
@@ -200,7 +119,7 @@ const DetailHead = (props: GoalsType) => {
           </Box>
         </Flex>
         <Flex flexDirection="column" gap="10px" w="68%">
-          <Heading fontSize="2xl">{props.goalsTitle}</Heading>
+          <Heading fontSize="2xl">{props.goalTitle}</Heading>
           <Box sx={MemoBox}>
             {props.memo
               ? props.memo.map((txt, index) => {

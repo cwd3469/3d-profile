@@ -13,11 +13,25 @@ export interface Mybodyinfo {
 export interface TodoData {
   todoId: string;
   autherId: string;
+  goalId: string;
   todoTitle: string;
   todoCheck: boolean;
   todoDate?: string;
   endDate?: string;
   weeks?: Array<string>;
+  onOff: boolean;
+}
+export interface GoalData {
+  goalId: string;
+  goalIcon?: string;
+  autherId: string;
+  goalTitle: string;
+  goalCheck: boolean;
+  startDate?: string;
+  endDate?: string;
+  todoList?: Array<string>;
+  onOff: boolean;
+  memo?: Array<string>;
 }
 
 export interface TodoAdd {
@@ -28,7 +42,7 @@ export interface TodoAdd {
   fontSize?: string;
 }
 
-export interface StartItem {
+export interface CareerPortfolio {
   url: string;
   title: string;
   image: string;

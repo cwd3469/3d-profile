@@ -1,60 +1,21 @@
-import React, { MouseEventHandler } from 'react';
-import { Box, Text, GridItem, Heading, Flex, CSSObject, background, Image, Button } from '@chakra-ui/react';
-import random from '@utils/random';
-import { TodoData, StartItem as StartItemType } from '@components/home/type';
+import React from 'react';
+import { Box, Heading, Flex, CSSObject, Image } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
-import { ChartList } from '@components/common/Chart';
 import { Mousewheel, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import KBox from '@components/common/KBox';
+import { useRecoilValue } from 'recoil';
+import { todoGoalListAtom } from '@states/todo';
+import { GoalData, CareerPortfolio } from '@components/home/type';
+import { ChartList } from '@components/common/Chart';
 import { GraphBtn } from '@components/common/KButton';
+import KBox from '@components/common/KBox';
 
 const HomeGraph = () => {
-  const data: Array<TodoData> = [
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '시니어 개발자',
-      todoCheck: false,
-      todoDate: '21 Mar , 2022',
-      endDate: '21 Mar , 2032',
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '토익 900',
-      todoCheck: false,
-      todoDate: '21 Mar , 2022',
-      endDate: '21 Mar , 2025',
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '2032년 2월 20일 적금 해지',
-      todoCheck: false,
-      todoDate: '21 Mar , 2022',
-      endDate: '21 Feb , 2032',
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '2032년 2월 20일 적금 해지 2032년 2월 20일 적금 해지 2032년 2월 20일 적금 해지',
-      todoCheck: false,
-      todoDate: '21 Mar , 2022',
-      endDate: '21 Feb , 2032',
-    },
-    {
-      todoId: random(30),
-      autherId: random(30),
-      todoTitle: '2032년 2월 20일 적금 해지',
-      todoCheck: false,
-      todoDate: '21 Mar , 2022',
-      endDate: '21 Feb , 2032',
-    },
-  ];
-  const myPage: Array<StartItemType> = [
+  const goals = useRecoilValue<Array<GoalData>>(todoGoalListAtom);
+
+  const myPage: Array<CareerPortfolio> = [
     {
       url: 'https://github.com/cwd3469',
       image: 'https://cdn-icons-png.flaticon.com/512/25/25231.png',
@@ -99,17 +60,10 @@ const HomeGraph = () => {
               mousewheel={true}
               modules={[Mousewheel, Scrollbar]}
               className="final-swiper">
-              {data.map((x, index) => {
+              {goals.map((x, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <FinalItem
-                      todoId={x.todoId}
-                      autherId={x.autherId}
-                      todoTitle={x.todoTitle}
-                      todoCheck={x.todoCheck}
-                      todoDate={x.todoDate}
-                      endDate={x.endDate}
-                    />
+                    <FinalItem {...x} />
                   </SwiperSlide>
                 );
               })}
@@ -168,7 +122,7 @@ const hoverAction: CSSObject = {
   },
 };
 
-const StartItem = (props: StartItemType) => {
+const StartItem = (props: CareerPortfolio) => {
   const ItmeStyle: CSSObject = {
     cursor: 'pointer',
     borderRadius: '30px',
@@ -190,9 +144,9 @@ const StartItem = (props: StartItemType) => {
   );
 };
 
-const FinalItem = (props: TodoData) => {
+const FinalItem = (props: GoalData) => {
   const BoxClick = (): void => {
-    console.log(props.todoId);
+    console.log(props.goalId);
   };
   const DoxTitle: CSSObject = {
     whiteSpace: 'nowrap',
@@ -216,7 +170,7 @@ const FinalItem = (props: TodoData) => {
             {props.endDate}
           </Heading>
           <Heading color="#000" fontSize="md" sx={DoxTitle} paddingBottom="5px">
-            {props.todoTitle}
+            {props.goalTitle}
           </Heading>
           <Heading color="#C1C3C9" fontSize="13px">
             D - 100

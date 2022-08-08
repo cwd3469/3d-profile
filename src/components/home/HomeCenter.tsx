@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Avatar,
   Box,
@@ -17,22 +18,20 @@ import random from '@utils/random';
 import type { Mybodyinfo, TodoData as TodoDataType, TodoAdd as TodoAddInterface } from '@components/home/type';
 import { AddIcon } from '@chakra-ui/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Scrollbar } from 'swiper';
+import { Mousewheel } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { MouseEventHandler } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { todoListAtom } from '@states/todo';
-import { useRecoilState } from 'recoil';
 import { SectionTitle } from './HomeGraph';
+import { authUserInfo } from '@states/auth';
 
 const shadow: CSSObject = {
   boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
 };
 
 const HomeCenter = () => {
-  const [state, setState] = useRecoilState(todoListAtom);
-  const TodoData: Array<TodoDataType> = state.todoData;
-
+  const [todos, setTodos] = useRecoilState<Array<TodoDataType>>(todoListAtom);
   return (
     <Box p={4} w="100%" h="100%">
       <Flex flexDirection="column" w="100%" h="100%" gap="14px">
@@ -53,7 +52,7 @@ const HomeCenter = () => {
               mousewheel={true}
               modules={[Mousewheel]}
               className="todo-swiper">
-              {TodoData.map((item, index) => {
+              {todos.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
                     <TodoItem
@@ -89,15 +88,7 @@ const HomeCenter = () => {
 };
 
 export const ProfileInfo = () => {
-  const MybodyInfo: Mybodyinfo = {
-    autherProfileImage: 'https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010_1280.jpg',
-    autherName: 'JooYoung choi',
-    autherAge: '29 year South Korea',
-    autherBlood: 'A',
-    autherHeight: '170',
-    autherWeight: '85',
-    autherId: random(30),
-  };
+  const MybodyInfo = useRecoilValue<Mybodyinfo>(authUserInfo);
   return (
     <Box bg="#FFFFFF" borderRadius="30px" padding="0 10px 30px">
       <Box position="relative" w="100%" h="85px">
@@ -133,7 +124,7 @@ export const ProfileInfo = () => {
   );
 };
 
-const TodoItem = (props: TodoData) => {
+const TodoItem = (props: TodoDataType) => {
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
       <Flex justifyContent="space-between">
