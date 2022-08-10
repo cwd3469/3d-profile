@@ -1,9 +1,9 @@
 .final-swiper {
   width: 100%;
-  padding: 10px !important;
+  padding: 10px 10px 10px 5px !important;
 }
 .todo-swiper{
-  height:200px;
+  height:250px;
 }
 .career-swiper{
   height:700px;
@@ -11,12 +11,12 @@
 }
 
 .goals-swiper{
-  height:614px;
+  height:700px;
   width:100%;
 }
 
 .detail-todo{
-  height:400px;
+  height:450px;
   width: 100%;
 }
 

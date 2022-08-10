@@ -31,7 +31,7 @@ const TodoSide = () => {
             </Flex>
             <Swiper
               direction={'vertical'}
-              slidesPerView={6}
+              slidesPerView={6.5}
               spaceBetween={0}
               mousewheel={true}
               modules={[Mousewheel]}
@@ -102,6 +102,8 @@ const DetailHead = (props: GoalData) => {
     padding: '10px',
     borderRadius: '5px',
     width: '100%',
+    height: '140px',
+    overflowY: 'scroll',
   };
   return (
     <Box sx={boxSx}>
@@ -121,15 +123,17 @@ const DetailHead = (props: GoalData) => {
         <Flex flexDirection="column" gap="10px" w="68%">
           <Heading fontSize="2xl">{props.goalTitle}</Heading>
           <Box sx={MemoBox}>
-            {props.memo
-              ? props.memo.map((txt, index) => {
-                  return (
-                    <Text fontSize="sm" key={index} wordBreak="keep-all">
-                      {txt}
-                    </Text>
-                  );
-                })
-              : ''}
+            <div>
+              {props.memo
+                ? props.memo.map((txt, index) => {
+                    return (
+                      <Text fontSize="sm" key={index} wordBreak="keep-all">
+                        {txt}
+                      </Text>
+                    );
+                  })
+                : ''}
+            </div>
           </Box>
         </Flex>
       </Flex>

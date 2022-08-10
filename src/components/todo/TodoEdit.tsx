@@ -16,13 +16,10 @@ import { todoListAtom } from '@states/todo';
 
 const TodoEdit = () => {
   const router = useRouter();
-  console.log(router);
   const editTodo = useRecoilValue(todoListAtom);
 
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndtDate] = useState<string>('');
-  console.log(startDate);
-  console.log(endDate);
 
   return (
     <Flex flexDirection="column" gap="15px">

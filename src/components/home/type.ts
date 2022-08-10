@@ -11,15 +11,19 @@ export interface Mybodyinfo {
 }
 
 export interface TodoData {
-  todoId: string;
+  todoId?: string;
   autherId: string;
-  goalId: string;
+  goalId?: string;
   todoTitle: string;
   todoCheck: boolean;
-  todoDate?: string;
+  startDate?: string;
   endDate?: string;
   weeks?: Array<string>;
   onOff: boolean;
+  totalAmount?: number;
+  allotment?: number;
+  counter?: number;
+  timestamp?: Date;
 }
 export interface GoalData {
   goalId: string;

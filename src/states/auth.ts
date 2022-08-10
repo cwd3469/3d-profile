@@ -2,6 +2,17 @@ import { atom, selector } from 'recoil';
 import { CareerBlock as CareerBlockInterface } from '@components/career/type';
 import { CareerPortfolio, Mybodyinfo } from '@components/home/type';
 
+const authState = atom({
+  key: 'authState',
+  default: null,
+  dangerouslyAllowMutability: true,
+});
+
+const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: false,
+});
+
 const authCareerInfo = atom<Array<CareerBlockInterface>>({
   key: 'authCareerInfo',
   default: [
@@ -183,8 +194,8 @@ const authUserInfo = atom<Mybodyinfo>({
     autherBlood: 'A',
     autherHeight: '170',
     autherWeight: '85',
-    autherId: 'autherId123',
+    autherId: 'admin1',
   },
 });
 
-export { authCareerInfo, authCareerPortfolio, authUserInfo };
+export { authCareerInfo, authCareerPortfolio, authUserInfo, isLoggedInState, authState };

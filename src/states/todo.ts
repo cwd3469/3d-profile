@@ -1,79 +1,9 @@
 import { TodoData, GoalData } from '@components/home/type';
 import { atom, selector } from 'recoil';
 
-const inputState = atom<string>({
-  key: 'inputState',
-  default: '',
-});
-
 const todoListAtom = atom<Array<TodoData>>({
   key: 'todoListAtom',
-  default: [
-    {
-      todoId: 'id1',
-      autherId: 'id1',
-      goalId: 'goalid1',
-      todoTitle: '출근하기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id2',
-      autherId: 'id2',
-      goalId: 'goalid1',
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id3',
-      autherId: 'id3',
-      goalId: 'goalid1',
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id4',
-      autherId: 'id4',
-      goalId: 'goalid2',
-      todoTitle: '퇴근하기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid2',
-      todoTitle: '서브프로젝트 home 완료 ',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid2',
-      todoTitle: '저녁 먹기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid3',
-      todoTitle: '장군이 산책',
-      todoCheck: true,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid4',
-      todoTitle: '12시 전에 취침',
-      todoCheck: true,
-      onOff: false,
-    },
-  ],
+  default: [],
 });
 
 const todoGoalListAtom = atom<Array<GoalData>>({
@@ -213,4 +143,4 @@ const todoGoalDetailAtom = atom<GoalData>({
   },
 });
 
-export { todoListAtom, inputState, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom };
+export { todoListAtom, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom };

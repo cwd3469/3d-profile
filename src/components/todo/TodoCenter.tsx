@@ -11,8 +11,13 @@ import 'swiper/css/pagination';
 import { GoalData } from '@components/home/type';
 import { useRecoilValue } from 'recoil';
 import { todoGoalTodoListAtom } from '@states/todo';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { db } from '@utils/firebase';
+import { useState } from 'react';
 const TodoCenter = () => {
   const goal = useRecoilValue(todoGoalTodoListAtom);
+  const board = collection(db, 'goal');
+  const [goalData, setGoalData] = useState();
 
   return (
     <Box p={4} h="100%" w="100%">
@@ -23,7 +28,7 @@ const TodoCenter = () => {
         </Flex>
         <Swiper
           direction={'vertical'}
-          slidesPerView={3}
+          slidesPerView={3.4}
           spaceBetween={0}
           mousewheel={true}
           modules={[Mousewheel]}
