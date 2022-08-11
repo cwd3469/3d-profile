@@ -28,8 +28,6 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import type { Mybodyinfo, TodoData as TodoDataType, TodoAdd as TodoAddInterface } from '@components/home/type';
 import { AddIcon } from '@chakra-ui/icons';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -40,6 +38,10 @@ import { GrayDate } from '@components/common/KText';
 import { db } from '@utils/firebase';
 import moment from 'moment';
 import isEmptyArr from '@utils/isEmptyArr';
+import { WeeksBox } from '@components/todo/TodoEdit';
+import weekChange from '@utils/weekChange';
+import { ArrWeeks } from '@components/todo/type';
+import { TodoObjCompare } from '@utils/objCompare';
 
 const shadow: CSSObject = {
   boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
@@ -63,6 +65,7 @@ const HomeCenter = () => {
 
   const addTodoInput = useCallback(async () => {
     const date = new Date();
+    const week = moment().format('dddd').toUpperCase().substring(0, 2);
     const answer = {
       autherId: userInfo.autherId,
       goalId: '-',
@@ -75,20 +78,17 @@ const HomeCenter = () => {
       endDate: moment().format('YYYY.MM.DD.'),
       startDate: moment().format('YYYY.MM.DD.'),
       timestamp: date,
-      weeks: ['화'],
+      weeks: weekChange(week),
     };
     const docRef = await addDoc(board, answer);
-    const res = { ...answer, todoId: docRef.id };
-    const arr = [res, ...todos];
+    setTodos((arrs) => [{ ...answer, todoId: docRef.id }, ...arrs]);
     setAddTodo('');
-    setTodos(arr);
-  }, [addTodo, openView, setTodos, todos, userInfo.autherId]);
+  }, [addTodo, openView, setTodos, userInfo.autherId]);
 
   const getTodoList = useCallback(async () => {
     const result = await getDocs(query(board, orderBy('timestamp', 'desc')));
     const todoList = result.docs.map((el) => {
       const res = el.data();
-
       return {
         todoId: el.id,
         autherId: res.autherId,
@@ -105,9 +105,20 @@ const HomeCenter = () => {
         weeks: res.weeks,
       };
     });
+    const reArr = [];
+    for (let i = 0; i < todoList.length; i++) {
+      const element = todoList[i];
+      if (element.todoCheck) {
+        reArr.push(element);
+      } else {
+        reArr.unshift(element);
+      }
+    }
 
-    setTodos(todoList);
+    setTodos(reArr);
   }, [setTodos]);
+
+  const [check, setCheck] = useState<boolean>(false);
 
   useEffect(() => {
     getTodoList();
@@ -124,21 +135,13 @@ const HomeCenter = () => {
         <Box w="100%">
           <Box bg="#fff" padding="20px" borderRadius="10px" transition="ease-out 2s">
             {!isEmptyArr(todos) ? (
-              <Swiper
-                direction={'vertical'}
-                slidesPerView={4.5}
-                spaceBetween={0}
-                mousewheel={true}
-                modules={[Mousewheel]}
-                className="todo-swiper">
-                {todos.map((item, index) => {
-                  return (
-                    <SwiperSlide key={index}>
-                      <TodoItem {...item} />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+              <Box h="240px" overflowY="scroll">
+                <Flex flexDirection="column" gap="15px">
+                  {todos.map((item, index) => {
+                    return <TodoItem {...item} key={index} />;
+                  })}
+                </Flex>
+              </Box>
             ) : (
               <Text>오늘 할일를 입력해주세요</Text>
             )}
@@ -159,7 +162,7 @@ const HomeCenter = () => {
                   size="md"
                   bg="#fff"
                   h="auto"
-                  maxLength={19}
+                  maxLength={18}
                   onChange={addTodoList}
                 />
                 <TodoAdd text="add" Icon={<AddIcon />} onClick={addTodoInput} />
@@ -210,29 +213,113 @@ export const ProfileInfo = () => {
 };
 
 const TodoItem = (props: TodoDataType) => {
+  // todos state
+  const [todoArr, setTodoArr] = useRecoilState<Array<TodoDataType>>(todoListAtom);
+  //  todo title
+  const [inputValue, setInputValue] = useState<string>(props.todoTitle);
+  // todo weeks
+  const [arrWeeks, setArrWeeks] = useState<Array<ArrWeeks> | undefined>(props.weeks);
+  // todo edit onoff swich
+  const [editOpen, setEditOpen] = useState<boolean>(false);
+  // active color
   const checkColor = props.todoCheck ? '#999' : '#000';
-  const [item, setItem] = useState<TodoDataType>(props);
-
-  const todoCheckEvent = useCallback(
+  //todo 완료 확인
+  const todoCheck = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const closeTodo = { ...item, todoCheck: e.target.checked };
+      const count = e.target.checked ? props.counter + 1 : props.counter - 1;
+      const closeTodo = { ...props, todoCheck: e.target.checked, counter: count };
+      const newArr = todoArr.map((todo, index) => {
+        return todo.todoId === closeTodo.todoId
+          ? {
+              ...todo,
+              todoCheck: closeTodo.todoCheck,
+              counter: closeTodo.counter,
+            }
+          : todo;
+      });
+      setTodoArr(newArr);
+      setEditOpen(false);
+      const docRef = doc(board, closeTodo.todoId);
       delete closeTodo.todoId;
-      const docRef = doc(board, props.todoId);
       await updateDoc(docRef, { ...closeTodo });
     },
-    [item, props.todoId],
+    [props, setTodoArr, todoArr],
   );
-
+  // todo data update
+  const fixDataOn = () => {
+    const fixData = { ...props, weeks: arrWeeks, todoTitle: inputValue };
+    if (!TodoObjCompare(fixData, props)) {
+      console.log('오케이');
+      console.log(props);
+      console.log(fixData);
+    }
+  };
+  // todo edit onOff
+  const fixOnOff = useCallback(() => {
+    setInputValue(props.todoTitle);
+    setArrWeeks(props.weeks);
+    setEditOpen(!editOpen);
+  }, [editOpen, props.todoTitle, props.weeks]);
+  // todo title update
+  const fixEditOnChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    },
+    [setInputValue],
+  );
+  // todo week update
+  const weekClick = useCallback(
+    (text: string) => {
+      const we = arrWeeks?.map((w, idx) => {
+        return w.name === text ? { name: text, boo: !w.boo } : w;
+      });
+      setArrWeeks(we);
+    },
+    [arrWeeks],
+  );
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
-      <Flex justifyContent="space-between">
-        <Heading fontSize="sm" textDecoration={props.todoCheck ? 'line-through' : 'none'} color={checkColor}>
-          {props.todoTitle}
-        </Heading>
-        <Flex gap="6px">
-          <EditIcon fontSize="small" sx={{ cursor: 'pointer', color: checkColor }} />
-          <Checkbox checked={props.todoCheck} onChange={todoCheckEvent} colorScheme="green" />
+      <Flex flexDirection="column" gap="10px">
+        <Flex justifyContent="space-between" alignItems="center">
+          {editOpen ? (
+            <Input
+              value={inputValue}
+              placeholder="수정 해주세요"
+              size="sm"
+              borderColor="#fff"
+              paddingLeft="0px"
+              maxLength={18}
+              onChange={fixEditOnChange}
+            />
+          ) : (
+            <Heading fontSize="sm" textDecoration={props.todoCheck ? 'line-through' : 'none'} color={checkColor}>
+              {inputValue}
+            </Heading>
+          )}
+
+          <Flex gap="6px">
+            {props.todoCheck ? (
+              <></>
+            ) : (
+              <EditIcon fontSize="small" sx={{ cursor: 'pointer', color: checkColor }} onClick={fixOnOff} />
+            )}
+            <Checkbox defaultChecked={props.todoCheck} onChange={todoCheck} colorScheme="green" />
+          </Flex>
         </Flex>
+        {editOpen ? (
+          <Flex flexDirection="column" gap="10px" alignItems="flex-end">
+            {' '}
+            <WeeksBox dataWeek={arrWeeks ? arrWeeks : []} WeekClick={weekClick} />
+            <Flex gap="10px">
+              <Button size="xs" onClick={fixOnOff} w="50px">
+                취소
+              </Button>
+              <Button size="xs" onClick={fixDataOn} w="50px">
+                수정
+              </Button>
+            </Flex>
+          </Flex>
+        ) : null}
       </Flex>
     </Box>
   );

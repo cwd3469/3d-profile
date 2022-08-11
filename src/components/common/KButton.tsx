@@ -6,9 +6,11 @@ export const GraphBtn = (props: {
   text?: string;
   Icon?: JSX.Element;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  active?: boolean;
 }) => {
   const BtnStyle: CSSObject = {
-    color: '#5CBEC7',
+    color: props.active ? '#edf2f7' : '#5CBEC7',
+    bg: props.active ? '#5CBEC7' : '#edf2f7',
     padding: '0px',
     height: '30px',
     minWidth: '30px',
@@ -20,6 +22,9 @@ export const GraphBtn = (props: {
       {props.text}
     </Button>
   );
+};
+GraphBtn.defaultProps = {
+  active: false,
 };
 
 interface GraphButton {

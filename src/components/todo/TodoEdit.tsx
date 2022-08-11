@@ -10,9 +10,35 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { DetailTodo } from '@components/todo/TodoSide';
 import DatePickerComponent from '@components/common/DatePickerComponent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { todoListAtom } from '@states/todo';
+import moment from 'moment';
+import { ArrWeeks } from './type';
+
+interface WeekBoxInterface {
+  dataWeek: Array<ArrWeeks>;
+  WeekClick: (text: string) => void;
+}
+
+export const WeeksBox = (props: WeekBoxInterface) => {
+  return (
+    <Flex gap="5px" justifyContent="space-between" w="100%">
+      {props.dataWeek.map((week, index) => {
+        return (
+          <GraphBtn
+            text={week.name}
+            key={index}
+            active={week.boo}
+            onClick={() => {
+              props.WeekClick(week.name);
+            }}
+          />
+        );
+      })}
+    </Flex>
+  );
+};
 
 const TodoEdit = () => {
   const router = useRouter();
@@ -45,17 +71,9 @@ const TodoEdit = () => {
         })}
       </Swiper>
 
-      <Flex justifyContent="space-between">
-        <Flex gap="5px">
-          <GraphBtn text="월" />
-          <GraphBtn text="화" />
-          <GraphBtn text="수" />
-          <GraphBtn text="목" />
-          <GraphBtn text="금" />
-          <GraphBtn text="토" />
-          <GraphBtn text="일" />
-        </Flex>
-      </Flex>
+      {/* <Flex justifyContent="space-between">
+        <WeeksBox />
+      </Flex> */}
       <Flex
         justifyContent="space-between"
         alignItems="center"
