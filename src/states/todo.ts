@@ -1,5 +1,20 @@
 import { TodoData, GoalData } from '@components/home/type';
 import { atom, selector } from 'recoil';
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  addDoc,
+  query,
+  orderBy,
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
+import { db } from '@utils/firebase';
+
+const board = collection(db, 'todo');
 
 const todoListAtom = atom<Array<TodoData>>({
   key: 'todoListAtom',
@@ -143,4 +158,40 @@ const todoGoalDetailAtom = atom<GoalData>({
   },
 });
 
-export { todoListAtom, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom };
+const todoListSelector = selector({
+  key: 'TodoListSelector',
+  get: async ({ get }) => {
+    const result = await getDocs(query(board, orderBy('timestamp', 'desc')));
+    const todoList = result.docs.map((el) => {
+      const res = el.data();
+      return {
+        todoId: el.id,
+        autherId: res.autherId,
+        goalId: res.goalId,
+        todoTitle: res.todoTitle,
+        todoCheck: res.todoCheck,
+        onOff: res.onOff,
+        totalAmount: res.totalAmount,
+        allotment: res.allotment,
+        counter: res.counter,
+        endDate: res.endDate,
+        startDate: res.startDate,
+        timestamp: res.timestamp,
+        weeks: res.weeks,
+      };
+    });
+    const reArr = [];
+    for (let i = 0; i < todoList.length; i++) {
+      const element = todoList[i];
+      if (element.todoCheck) {
+        reArr.push(element);
+      } else {
+        reArr.unshift(element);
+      }
+    }
+
+    return reArr;
+  },
+});
+
+export { todoListAtom, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom, todoListSelector };

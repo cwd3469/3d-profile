@@ -81,7 +81,12 @@ const HomeCenter = () => {
       weeks: weekChange(week),
     };
     const docRef = await addDoc(board, answer);
-    setTodos((arrs) => [{ ...answer, todoId: docRef.id }, ...arrs]);
+    setTodos((arrs) => {
+      const reArr = arrs;
+      const addArr = [...reArr, { ...answer, todoId: docRef.id }];
+      console.log([{ ...answer, todoId: docRef.id }, ...reArr]);
+      return addArr;
+    });
     setAddTodo('');
   }, [addTodo, openView, setTodos, userInfo.autherId]);
 
@@ -134,17 +139,15 @@ const HomeCenter = () => {
         <ProfileInfo />
         <Box w="100%">
           <Box bg="#fff" padding="20px" borderRadius="10px" transition="ease-out 2s">
-            {!isEmptyArr(todos) ? (
-              <Box h="240px" overflowY="scroll">
-                <Flex flexDirection="column" gap="15px">
-                  {todos.map((item, index) => {
-                    return <TodoItem {...item} key={index} />;
-                  })}
-                </Flex>
-              </Box>
-            ) : (
-              <Text>오늘 할일를 입력해주세요</Text>
-            )}
+            {/* {!isEmptyArr(todos) ? ( */}
+            <Box h="240px" overflowY="scroll">
+              <Flex flexDirection="column" gap="15px">
+                {todos.map((item, index) => {
+                  console.log(item);
+                  return <TodoItem {...item} key={index} />;
+                })}
+              </Flex>
+            </Box>
           </Box>
           <Box h="17px"></Box>
           <Box bg="#FFFFFF" borderRadius="10px" padding="15px 20px" sx={shadow}>
@@ -245,15 +248,15 @@ const TodoItem = (props: TodoDataType) => {
     },
     [props, setTodoArr, todoArr],
   );
-  // todo data update
-  const fixDataOn = () => {
-    const fixData = { ...props, weeks: arrWeeks, todoTitle: inputValue };
-    if (!TodoObjCompare(fixData, props)) {
-      console.log('오케이');
-      console.log(props);
-      console.log(fixData);
-    }
-  };
+  // // todo data update
+  // const fixDataOn = () => {
+  //   const fixData = { ...props, weeks: arrWeeks, todoTitle: inputValue };
+  //   if (!TodoObjCompare(fixData, props)) {
+  //     console.log('오케이');
+  //     console.log(props);
+  //     console.log(fixData);
+  //   }
+  // };
   // todo edit onOff
   const fixOnOff = useCallback(() => {
     setInputValue(props.todoTitle);
