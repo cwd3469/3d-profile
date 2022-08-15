@@ -42,6 +42,7 @@ import { WeeksBox } from '@components/todo/TodoEdit';
 import weekChange from '@utils/weekChange';
 import { ArrWeeks } from '@components/todo/type';
 import { TodoObjCompare } from '@utils/objCompare';
+import _ from 'lodash';
 
 const shadow: CSSObject = {
   boxShadow: '2px 1px 10px 1px rgba(0,0,0,0.1)',
@@ -84,7 +85,6 @@ const HomeCenter = () => {
     setTodos((arrs) => {
       const reArr = arrs;
       const addArr = [...reArr, { ...answer, todoId: docRef.id }];
-      console.log([{ ...answer, todoId: docRef.id }, ...reArr]);
       return addArr;
     });
     setAddTodo('');
@@ -143,7 +143,6 @@ const HomeCenter = () => {
             <Box h="240px" overflowY="scroll">
               <Flex flexDirection="column" gap="15px">
                 {todos.map((item, index) => {
-                  console.log(item);
                   return <TodoItem {...item} key={index} />;
                 })}
               </Flex>
@@ -156,7 +155,7 @@ const HomeCenter = () => {
                 <FormLabel htmlFor="email-alerts" mb="0">
                   공개 / 비공개
                 </FormLabel>
-                <Switch colorScheme="green" onChange={openSwich} />
+                <Switch colorScheme="green" onChange={openSwich} isChecked={openView} />
               </FormControl>
               <Flex alignItems="stretch" gap="5px">
                 <Input
@@ -216,6 +215,7 @@ export const ProfileInfo = () => {
 };
 
 const TodoItem = (props: TodoDataType) => {
+  const [openView, setOpenView] = useState<boolean>(props.onOff);
   // todos state
   const [todoArr, setTodoArr] = useRecoilState<Array<TodoDataType>>(todoListAtom);
   //  todo title
@@ -243,20 +243,30 @@ const TodoItem = (props: TodoDataType) => {
       setTodoArr(newArr);
       setEditOpen(false);
       const docRef = doc(board, closeTodo.todoId);
-      delete closeTodo.todoId;
-      await updateDoc(docRef, { ...closeTodo });
+      const omitCloseTodo = _.omit(closeTodo, 'todoId');
+      await updateDoc(docRef, { ...omitCloseTodo });
     },
     [props, setTodoArr, todoArr],
   );
+  const openSwich = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOpenView(e.target.checked);
+  }, []);
   // // todo data update
-  // const fixDataOn = () => {
-  //   const fixData = { ...props, weeks: arrWeeks, todoTitle: inputValue };
-  //   if (!TodoObjCompare(fixData, props)) {
-  //     console.log('오케이');
-  //     console.log(props);
-  //     console.log(fixData);
-  //   }
-  // };
+  const fixDataOn = useCallback(async () => {
+    const fixData = { ...props, weeks: arrWeeks, todoTitle: inputValue, onOff: openView };
+    if (!TodoObjCompare(fixData, props)) {
+      const newArr = todoArr.map((todo, index) => {
+        return todo.todoId === fixData.todoId ? fixData : todo;
+      });
+      setTodoArr(newArr);
+      setEditOpen(false);
+      const docRef = doc(board, fixData.todoId);
+      const omitFixData = _.omit(fixData, 'todoId');
+      console.log(omitFixData);
+
+      await updateDoc(docRef, { ...omitFixData });
+    }
+  }, [arrWeeks, inputValue, openView, props, setTodoArr, todoArr]);
   // todo edit onOff
   const fixOnOff = useCallback(() => {
     setInputValue(props.todoTitle);
@@ -280,9 +290,29 @@ const TodoItem = (props: TodoDataType) => {
     },
     [arrWeeks],
   );
+  const deleteTodoClick = useCallback(async () => {
+    const todoObj = props;
+    const docRef = doc(board, props.todoId);
+    await deleteDoc(docRef);
+    const reArr = todoArr.filter((todo) => {
+      return todo.todoId !== todoObj.todoId;
+    });
+    setTodoArr(reArr);
+    setEditOpen(false);
+  }, [props, setTodoArr, todoArr]);
   return (
     <Box padding="10px" border="1px solid #eee" borderRadius="5px">
       <Flex flexDirection="column" gap="10px">
+        {editOpen ? (
+          <FormControl display="flex" alignItems="center" justifyContent="end">
+            <FormLabel htmlFor="email-alerts" mb="0" fontSize="sm">
+              공개 / 비공개
+            </FormLabel>
+            <Switch colorScheme="green" onChange={openSwich} size="sm" isChecked={openView} />
+          </FormControl>
+        ) : (
+          ''
+        )}
         <Flex justifyContent="space-between" alignItems="center">
           {editOpen ? (
             <Input
@@ -316,6 +346,9 @@ const TodoItem = (props: TodoDataType) => {
             <Flex gap="10px">
               <Button size="xs" onClick={fixOnOff} w="50px">
                 취소
+              </Button>
+              <Button size="xs" onClick={deleteTodoClick} w="50px">
+                삭제
               </Button>
               <Button size="xs" onClick={fixDataOn} w="50px">
                 수정
