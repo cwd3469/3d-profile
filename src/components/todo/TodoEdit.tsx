@@ -1,4 +1,15 @@
-import { Button, Flex, Input, Textarea, Text, Box } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Input,
+  Textarea,
+  Text,
+  Box,
+  FormErrorMessage,
+  Icon,
+  FormLabel,
+  FormControl,
+} from '@chakra-ui/react';
 import { GraphBtn, RoundBtn } from '@components/common/KButton';
 import { useRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -15,6 +26,8 @@ import { useRecoilValue } from 'recoil';
 import { todoListAtom } from '@states/todo';
 import moment from 'moment';
 import { ArrWeeks } from './type';
+import { useForm } from 'react-hook-form';
+import FileUpload from '@components/common/FileUpload';
 
 interface WeekBoxInterface {
   dataWeek: Array<ArrWeeks>;
@@ -40,17 +53,50 @@ export const WeeksBox = (props: WeekBoxInterface) => {
   );
 };
 
+type FormValues = {
+  file_: FileList;
+};
+
 const TodoEdit = () => {
   const router = useRouter();
   const editTodo = useRecoilValue(todoListAtom);
-
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndtDate] = useState<string>('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = handleSubmit((data) => console.log('On Submit: ', data));
+
+  const validateFiles = (value: FileList) => {
+    if (value.length < 1) {
+      return 'Files is required';
+    }
+    for (const file of Array.from(value)) {
+      const fsMb = file.size / (1024 * 1024);
+      const MAX_FILE_SIZE = 10;
+      if (fsMb > MAX_FILE_SIZE) {
+        return 'Max file size 10mb';
+      }
+    }
+    return true;
+  };
 
   return (
     <Flex flexDirection="column" gap="15px">
       <Flex gap="10px" justifyContent="space-between" alignItems="center">
-        <RoundBtn Icon={<AddAPhotoIcon />} big />
+        <form onSubmit={onSubmit}>
+          <FormControl isInvalid={!!errors.file_} isRequired>
+            <FileUpload accept={'image/*'} multiple register={register('file_', { validate: validateFiles })}>
+              <RoundBtn Icon={<AddAPhotoIcon />} big />
+            </FileUpload>
+            <FormErrorMessage>{errors.file_ && errors?.file_.message}</FormErrorMessage>
+          </FormControl>
+
+          <button>Submit</button>
+        </form>
         <Input placeholder="목표를 입력해주세요" size="lg" w="85%" />
       </Flex>
       <Textarea placeholder="Here is a sample placeholder" resize="none" height="160px" />
