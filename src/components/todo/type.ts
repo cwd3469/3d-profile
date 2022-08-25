@@ -9,3 +9,8 @@ export interface GoalsType {
   memo?: Array<string>;
   todoList?: Array<string>;
 }
+
+export interface ArrWeeks {
+  name: string;
+  boo: boolean;
+}

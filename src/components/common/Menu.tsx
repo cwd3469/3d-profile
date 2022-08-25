@@ -29,7 +29,7 @@ const Menu = () => {
   ];
 
   return (
-    <Box bg="#089BAB" borderRadius="30px" h="100%">
+    <Box bg="#089BAB" borderRadius="20px" h="100%">
       <Flex direction="column" align="center" justify="center" h="100%">
         {navList.map((nav, index) => {
           return <MenuNav key={index} path={nav.path} Icon={nav.Icon} name={nav.name} />;
@@ -41,9 +41,6 @@ const Menu = () => {
 
 const MenuNav = (props: NavList) => {
   const router = useRouter();
-
-  // console.log(router.asPath);
-  // console.log(props.path);
 
   const style = {
     color: '#fff',

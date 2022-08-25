@@ -11,7 +11,7 @@ const CareerSide = () => {
   const data = useRecoilValue<Array<CareerBlockInterface>>(authCareerInfo);
   return (
     <KBox>
-      <Flex flexDirection="column" gap="25px" overflowY="scroll" overflowX="hidden" h="708px">
+      <Flex flexDirection="column" gap="25px" overflowY="scroll" overflowX="hidden" h="790px">
         {data.map((contents, index) => {
           return <CareerBlock key={index} {...contents} />;
         })}

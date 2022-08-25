@@ -41,9 +41,9 @@ const HomeGraph = () => {
   };
   return (
     <KBox>
-      <Flex flexDirection="column" w="100%" h="100%" gap="20px">
+      <Flex flexDirection="column" w="100%" h="100%" gap="30px">
         <Box>
-          <Flex flexDirection="column" gap="10px" paddingTop="10px">
+          <Flex flexDirection="column" gap="10px">
             <Flex justifyContent="space-between" alignItems="center">
               <SectionTitle text=" Final goal" />
               <Flex alignItems="center" gap="10px">
@@ -55,7 +55,7 @@ const HomeGraph = () => {
             </Flex>
 
             <Swiper
-              slidesPerView={2.5}
+              slidesPerView={3.2}
               spaceBetween={10}
               mousewheel={true}
               modules={[Mousewheel, Scrollbar]}
@@ -70,8 +70,8 @@ const HomeGraph = () => {
             </Swiper>
           </Flex>
         </Box>
-        <Box>
-          <Flex flexDirection="column" gap="10px" paddingTop="10px">
+        <Box borderTop="1px solid #eee">
+          <Flex flexDirection="column" gap="10px" paddingTop="20px">
             <Flex justifyContent="space-between" alignItems="center">
               <SectionTitle text="Todo Chart" />
               <Flex alignItems="center" gap="10px">
@@ -83,8 +83,8 @@ const HomeGraph = () => {
             <ChartList type={chartFilter} />
           </Flex>
         </Box>
-        <Box>
-          <Flex flexDirection="column" gap="10px" paddingTop="10px">
+        <Box borderTop="1px solid #eee">
+          <Flex flexDirection="column" gap="10px" paddingTop="20px">
             <Flex justifyContent="space-between" alignItems="center">
               <SectionTitle text="Go Run!" />
               <Flex alignItems="center" gap="10px">
@@ -125,10 +125,11 @@ const hoverAction: CSSObject = {
 const StartItem = (props: CareerPortfolio) => {
   const ItmeStyle: CSSObject = {
     cursor: 'pointer',
-    borderRadius: '30px',
+    borderRadius: '20px',
     height: '140px',
     backgroundColor: '#fff',
     w: '100px',
+    border: '1px solid #eee',
   };
   return (
     <Box sx={{ ...hoverAction, ...ItmeStyle }}>
@@ -159,6 +160,7 @@ const FinalItem = (props: GoalData) => {
     backgroundColor: '#fff',
     borderRadius: '5px',
     padding: '5px',
+    border: '1px solid #eee',
   };
 
   return (

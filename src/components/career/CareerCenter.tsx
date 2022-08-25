@@ -16,8 +16,7 @@ const CareerCenter = () => {
           <SectionTitle text="Career List" />
           <GrayDate date="26 Aug 2022" />
         </Flex>
-        <Flex flexDirection="column" padding="15px 0px" gap="20px">
-          <Box h="20px" />
+        <Flex flexDirection="column" padding="15px 0px" gap="14px">
           <ProfileInfo />
           <KBox type={BoxCase.small}>
             <Flex flexDirection="column" gap="10px" overflowX="hidden" overflowY="scroll" h="350px">

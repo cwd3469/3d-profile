@@ -1,4 +1,15 @@
-import { Button, Flex, Input, Textarea, Text, Box } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Input,
+  Textarea,
+  Text,
+  Box,
+  FormErrorMessage,
+  Icon,
+  FormLabel,
+  FormControl,
+} from '@chakra-ui/react';
 import { GraphBtn, RoundBtn } from '@components/common/KButton';
 import { useRouter } from 'next/router';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,24 +21,87 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { DetailTodo } from '@components/todo/TodoSide';
 import DatePickerComponent from '@components/common/DatePickerComponent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { todoListAtom } from '@states/todo';
+import moment from 'moment';
+import { ArrWeeks } from './type';
+import { useForm } from 'react-hook-form';
+import FileUpload from '@components/common/FileUpload';
+
+interface WeekBoxInterface {
+  dataWeek: Array<ArrWeeks>;
+  WeekClick: (text: string) => void;
+}
+
+export const WeeksBox = (props: WeekBoxInterface) => {
+  return (
+    <Flex gap="5px" justifyContent="space-between" w="100%">
+      {props.dataWeek.map((week, index) => {
+        return (
+          <GraphBtn
+            text={week.name}
+            key={index}
+            active={week.boo}
+            onClick={() => {
+              props.WeekClick(week.name);
+            }}
+          />
+        );
+      })}
+    </Flex>
+  );
+};
+
+type FormValues = {
+  file_: FileList;
+};
 
 const TodoEdit = () => {
   const router = useRouter();
-  console.log(router);
+  // 목표에 속해 있는 todo 리스트
   const editTodo = useRecoilValue(todoListAtom);
-
+  // 시작 데이트 state
   const [startDate, setStartDate] = useState<string>('');
+  // 끝 데이트 state
   const [endDate, setEndtDate] = useState<string>('');
-  console.log(startDate);
-  console.log(endDate);
+  // react-hook-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  // file 확인
+  const onSubmit = handleSubmit((data) => console.log('On Submit: ', data));
+
+  // file 조건 설정
+  const validateFiles = (value: FileList) => {
+    if (value.length < 1) {
+      return 'Files is required';
+    }
+    for (const file of Array.from(value)) {
+      // 최대 이미지 사이즈 설정
+      const fsMb = file.size / (1024 * 1024);
+      const MAX_FILE_SIZE = 10;
+      if (fsMb > MAX_FILE_SIZE) {
+        return 'Max file size 10mb';
+      }
+    }
+    return true;
+  };
 
   return (
     <Flex flexDirection="column" gap="15px">
       <Flex gap="10px" justifyContent="space-between" alignItems="center">
-        <RoundBtn Icon={<AddAPhotoIcon />} big />
+        <form onSubmit={onSubmit}>
+          <FormControl isInvalid={!!errors.file_} isRequired>
+            <FileUpload accept={'image/*'} multiple register={register('file_', { validate: validateFiles })}>
+              <RoundBtn Icon={<AddAPhotoIcon />} big />
+            </FileUpload>
+            <FormErrorMessage>{errors.file_ && errors?.file_.message}</FormErrorMessage>
+          </FormControl>
+          <button>Submit</button>
+        </form>
         <Input placeholder="목표를 입력해주세요" size="lg" w="85%" />
       </Flex>
       <Textarea placeholder="Here is a sample placeholder" resize="none" height="160px" />
@@ -48,17 +122,9 @@ const TodoEdit = () => {
         })}
       </Swiper>
 
-      <Flex justifyContent="space-between">
-        <Flex gap="5px">
-          <GraphBtn text="월" />
-          <GraphBtn text="화" />
-          <GraphBtn text="수" />
-          <GraphBtn text="목" />
-          <GraphBtn text="금" />
-          <GraphBtn text="토" />
-          <GraphBtn text="일" />
-        </Flex>
-      </Flex>
+      {/* <Flex justifyContent="space-between">
+        <WeeksBox />
+      </Flex> */}
       <Flex
         justifyContent="space-between"
         alignItems="center"

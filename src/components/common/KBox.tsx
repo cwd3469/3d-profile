@@ -17,8 +17,8 @@ const KBox = (props: WhiteBox) => {
     bg: '#fff',
     h: props.type === BoxCase.small ? 'auto' : '100%',
     w: props.type === BoxCase.small ? props.width : '100%',
-    borderRadius: props.type === BoxCase.small ? '20px' : '60px 0 0 60px',
-    padding: props.type === BoxCase.small ? '15px' : '30px 10px 30px 30px',
+    borderRadius: props.type === BoxCase.small ? '10px' : '20px',
+    padding: props.type === BoxCase.small ? '15px' : '20px',
     position: props.position ? props.position : 'static',
   };
   return <Box sx={sideBodyStyle}>{props.children}</Box>;

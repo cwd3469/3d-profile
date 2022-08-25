@@ -1,79 +1,24 @@
 import { TodoData, GoalData } from '@components/home/type';
 import { atom, selector } from 'recoil';
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  addDoc,
+  query,
+  orderBy,
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
+import { db } from '@utils/firebase';
 
-const inputState = atom<string>({
-  key: 'inputState',
-  default: '',
-});
+const board = collection(db, 'todo');
 
 const todoListAtom = atom<Array<TodoData>>({
   key: 'todoListAtom',
-  default: [
-    {
-      todoId: 'id1',
-      autherId: 'id1',
-      goalId: 'goalid1',
-      todoTitle: '출근하기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id2',
-      autherId: 'id2',
-      goalId: 'goalid1',
-      todoTitle: '영어단어 10개 외우기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id3',
-      autherId: 'id3',
-      goalId: 'goalid1',
-      todoTitle: '낮잠자기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id4',
-      autherId: 'id4',
-      goalId: 'goalid2',
-      todoTitle: '퇴근하기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid2',
-      todoTitle: '서브프로젝트 home 완료 ',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid2',
-      todoTitle: '저녁 먹기',
-      todoCheck: false,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid3',
-      todoTitle: '장군이 산책',
-      todoCheck: true,
-      onOff: false,
-    },
-    {
-      todoId: 'id',
-      autherId: 'id',
-      goalId: 'goalid4',
-      todoTitle: '12시 전에 취침',
-      todoCheck: true,
-      onOff: false,
-    },
-  ],
+  default: [],
 });
 
 const todoGoalListAtom = atom<Array<GoalData>>({
@@ -213,4 +158,40 @@ const todoGoalDetailAtom = atom<GoalData>({
   },
 });
 
-export { todoListAtom, inputState, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom };
+const todoListSelector = selector({
+  key: 'TodoListSelector',
+  get: async ({ get }) => {
+    const result = await getDocs(query(board, orderBy('timestamp', 'desc')));
+    const todoList = result.docs.map((el) => {
+      const res = el.data();
+      return {
+        todoId: el.id,
+        autherId: res.autherId,
+        goalId: res.goalId,
+        todoTitle: res.todoTitle,
+        todoCheck: res.todoCheck,
+        onOff: res.onOff,
+        totalAmount: res.totalAmount,
+        allotment: res.allotment,
+        counter: res.counter,
+        endDate: res.endDate,
+        startDate: res.startDate,
+        timestamp: res.timestamp,
+        weeks: res.weeks,
+      };
+    });
+    const reArr = [];
+    for (let i = 0; i < todoList.length; i++) {
+      const element = todoList[i];
+      if (element.todoCheck) {
+        reArr.push(element);
+      } else {
+        reArr.unshift(element);
+      }
+    }
+
+    return reArr;
+  },
+});
+
+export { todoListAtom, todoGoalListAtom, todoGoalTodoListAtom, todoGoalDetailAtom, todoListSelector };

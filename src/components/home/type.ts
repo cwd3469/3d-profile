@@ -1,3 +1,4 @@
+import { ArrWeeks } from '@components/todo/type';
 import { MouseEventHandler } from 'react';
 
 export interface Mybodyinfo {
@@ -11,17 +12,23 @@ export interface Mybodyinfo {
 }
 
 export interface TodoData {
-  todoId: string;
+  [key: string]: string | undefined | boolean | Array<ArrWeeks> | number | Date;
+  todoId?: string;
   autherId: string;
-  goalId: string;
+  goalId?: string;
   todoTitle: string;
   todoCheck: boolean;
-  todoDate?: string;
+  startDate?: string;
   endDate?: string;
-  weeks?: Array<string>;
+  weeks?: Array<ArrWeeks>;
   onOff: boolean;
+  totalAmount?: number;
+  allotment?: number;
+  counter: number;
+  timestamp?: Date;
 }
 export interface GoalData {
+  [key: string]: string | undefined | boolean | Array<string> | number;
   goalId: string;
   goalIcon?: string;
   autherId: string;
