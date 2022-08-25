@@ -10,8 +10,11 @@ type FileUploadProps = {
 };
 
 const FileUpload = (props: FileUploadProps) => {
+  // 등록 , 받는 파일 형태 , multiple 다중 선택 가능? , 자식
   const { register, accept, multiple, children } = props;
+  // input ref
   const inputRef = useRef<HTMLInputElement | null>(null);
+  //
   const { ref, ...rest } = register as { ref: (instance: HTMLInputElement | null) => void };
 
   const handleClick = () => inputRef.current?.click();

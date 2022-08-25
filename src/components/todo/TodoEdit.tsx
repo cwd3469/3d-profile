@@ -59,22 +59,28 @@ type FormValues = {
 
 const TodoEdit = () => {
   const router = useRouter();
+  // 목표에 속해 있는 todo 리스트
   const editTodo = useRecoilValue(todoListAtom);
+  // 시작 데이트 state
   const [startDate, setStartDate] = useState<string>('');
+  // 끝 데이트 state
   const [endDate, setEndtDate] = useState<string>('');
+  // react-hook-form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-
+  // file 확인
   const onSubmit = handleSubmit((data) => console.log('On Submit: ', data));
 
+  // file 조건 설정
   const validateFiles = (value: FileList) => {
     if (value.length < 1) {
       return 'Files is required';
     }
     for (const file of Array.from(value)) {
+      // 최대 이미지 사이즈 설정
       const fsMb = file.size / (1024 * 1024);
       const MAX_FILE_SIZE = 10;
       if (fsMb > MAX_FILE_SIZE) {
@@ -94,7 +100,6 @@ const TodoEdit = () => {
             </FileUpload>
             <FormErrorMessage>{errors.file_ && errors?.file_.message}</FormErrorMessage>
           </FormControl>
-
           <button>Submit</button>
         </form>
         <Input placeholder="목표를 입력해주세요" size="lg" w="85%" />
